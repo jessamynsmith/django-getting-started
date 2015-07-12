@@ -44,8 +44,11 @@ instructions can be found on the homebrew site: http://brew.sh/
 1. Ensure that commands from homebrew packages are found before system commands. You can do this by
 editing your .bashrc file. In Terminal, enter the following:
 > $ cd ~
+>
 > $ emacs .bashrc  # Could also use vim
-> export PATH=/usr/local/sbin:/usr/local/bin:$PATH  1. Add this to the bottom of the file
+>
+> export PATH=/usr/local/sbin:/usr/local/bin:$PATH  # Add this to the bottom of the file
+>
 > Save and exit
 
 1. Source your changes to .bashrc into the current shell. In Terminal, enter the following:
@@ -127,3 +130,7 @@ deploying a Django project to Heroku. In terminal:
 > $ cd starter
 >
 > $ django-admin startproject starter .
+
+
+https://devcenter.heroku.com/articles/getting-started-with-django#prerequisites
+https://docs.djangoproject.com/en/1.8/intro/tutorial01/
