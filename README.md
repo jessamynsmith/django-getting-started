@@ -39,6 +39,7 @@ instructions can be found on the homebrew site: http://brew.sh/
 
 1. Familiarize yourself with a command line editor. Emacs and Vim are popular choices.
 > Emacs basics: http://mally.stanford.edu/~sr/computing/emacs.html
+>
 > Vim basics: http://vim.wikia.com/wiki/Tutorial
 
 1. Ensure that commands from homebrew packages are found before system commands. You can do this by
@@ -47,7 +48,9 @@ editing your .bashrc file. In Terminal, enter the following:
 >
 > $ emacs .bashrc  # Could also use vim
 >
-> export PATH=/usr/local/sbin:/usr/local/bin:$PATH  # Add this to the bottom of the file
+> Add the following line to the bottom of the file:
+>
+>     export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 >
 > Save and exit
 
