@@ -132,5 +132,11 @@ deploying a Django project to Heroku. In terminal:
 > $ django-admin startproject starter .
 
 
+Resources
+---------
+
 https://devcenter.heroku.com/articles/getting-started-with-django#prerequisites
+
 https://docs.djangoproject.com/en/1.8/intro/tutorial01/
+
+TODO Add more explanation of what each step is doing.
