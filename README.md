@@ -49,7 +49,7 @@ editing your .bashrc file. In Terminal, enter the following:
 >
 > $ open .bashrc  # Could also use vim or emacs
 >
-> Add the following line to the bottom of the file:
+> If /usr/local/sbin and /usr/local/bin are not already on your path, add them near the top of the file:
 >
 >     export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 >
@@ -97,7 +97,7 @@ editing your .bashrc file. In Terminal, enter the following:
 >
 > $ open .bashrc  # Could also use vim or emacs
 >
-> Add the following 3 lines:
+> If they are not already present, add the following 3 lines:
 >
 >     export WORKON_HOME=$HOME/.virtualenvs
 >     export PROJECT_HOME=$HOME/Development
