@@ -81,7 +81,7 @@ the following:
 1. Verify the correct python3 is now on your path. In Terminal, enter the following:
 > $ which python3  # Should be "/usr/local/bin/python3"
 
-1. Ensure that pip is up to date:
+1. Ensure that 3 is up to date:
 > $ pip install -U pip
 
 1. Install virtualenv and virtualenvwrapper for python3. The virtualenv package allows you to have individual
@@ -89,7 +89,7 @@ environments for every python project, separate from the system package installs
 virtualenvwrapper package is a utility to manage your virtualenvs. It keeps the virtualenvs separate
 from your code and also provides useful operations on virtualenvs.
 (To be investigated: Do virtualenv and virtualenvwrapper have to be installed globally?)
-> $ sudo pip3 install virtualenv virtualenvwrapper
+> $ sudo pip install virtualenv virtualenvwrapper
 
 1. Add virtualenvwrapper configuration to your .bashrc file. You can do this by
 editing your .bashrc file. In Terminal, enter the following:
