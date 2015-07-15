@@ -37,7 +37,8 @@ instructions can be found on the homebrew site: http://brew.sh/
 >
 > $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-1. Familiarize yourself with a command line editor. Emacs and Vim are popular choices.
+1. Familiarize yourself with a command line editor. Emacs and Vim are popular choices. If you find
+this too daunting, you can use the open command.
 > Emacs basics: http://mally.stanford.edu/~sr/computing/emacs.html
 >
 > Vim basics: http://vim.wikia.com/wiki/Tutorial
@@ -46,7 +47,7 @@ instructions can be found on the homebrew site: http://brew.sh/
 editing your .bashrc file. In Terminal, enter the following:
 > $ cd ~
 >
-> $ emacs .bashrc  # Could also use vim
+> $ open .bashrc  # Could also use vim or emacs
 >
 > Add the following line to the bottom of the file:
 >
@@ -80,17 +81,21 @@ the following:
 1. Verify the correct python3 is now on your path. In Terminal, enter the following:
 > $ which python3  # Should be "/usr/local/bin/python3"
 
-1. Install virtualenv and virtualenvwrapper. The virtualenv package allows you to have individual
+1. Ensure that pip is up to date:
+> $ pip install -U pip
+
+1. Install virtualenv and virtualenvwrapper for python3. The virtualenv package allows you to have individual
 environments for every python project, separate from the system package installs. The 
 virtualenvwrapper package is a utility to manage your virtualenvs. It keeps the virtualenvs separate
 from your code and also provides useful operations on virtualenvs.
+(To be investigated: Do virtualenv and virtualenvwrapper have to be installed globally?)
 > $ sudo pip3 install virtualenv virtualenvwrapper
 
 1. Add virtualenvwrapper configuration to your .bashrc file. You can do this by
 editing your .bashrc file. In Terminal, enter the following:
 > $ cd ~
 >
-> $ emacs .bashrc  # Could also use vim
+> $ open .bashrc  # Could also use vim or emacs
 >
 > Add the following 3 lines:
 >
@@ -121,7 +126,7 @@ Django Project Setup
 1. Clone your project. Open Terminal, and do the following:
 > $ cd ~/Development
 >
-> $ git clone <VALUE_FROM_GITHUB> # Paste in the value you copied above
+> $ git clone ```<VALUE_FROM_GITHUB>``` # Paste in the value you copied above
 
 1. Make a virtualenv and install django-toolbelt, which includes Django and useful packages for
 deploying a Django project to Heroku. In terminal:
@@ -138,8 +143,10 @@ deploying a Django project to Heroku. In terminal:
 Resources
 ---------
 
-https://devcenter.heroku.com/articles/getting-started-with-django#prerequisites
+http://tutorial.djangogirls.org/en/index.html
 
 https://docs.djangoproject.com/en/1.8/intro/tutorial01/
+
+https://devcenter.heroku.com/articles/getting-started-with-django#prerequisites
 
 TODO Add more explanation of what each step is doing.
