@@ -201,7 +201,15 @@ deploying a Django project to Heroku. In terminal:
 			requirements.txt
 		
 		nothing added to commit but untracked files present (use "git add" to track)
+		
+1. Verify that your project runs (always a good idea before committing code!).
 
+    1. In Terminal, run your Django app:
+        
+        $ python manage.py runserver
+    
+    1. In a browser, open http://127.0.0.1:8000 where you should see "It worked!"
+    
 1. Commit and push your changes.
 
 		$ git add -A  # Add all modified files to staging
@@ -209,6 +217,21 @@ deploying a Django project to Heroku. In terminal:
 		$ git push origin master  # Push commit to github
 
 1. Go to your GitHub project in the browser and you should see your changes.
+
+
+## Add Functionality to Django App
+
+Now comes the fun part: making your Django app do something interesting!
+
+1. Ensure you are set up to start working. You will want to do this each time you start a working. Open Terminal, and do the following:
+
+		$ cd ~/Development/my_project
+		$ workon my_project
+
+1. In order to add functionality to your project, you need to make an app. An app contains a cohesive set of functions, e.g. user account management. To create an app:
+
+		$ python manage.py startapp my_app
+
 
 # Resources
 
