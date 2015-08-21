@@ -49,24 +49,27 @@ this too daunting, you can use the open command.
 
 1. Ensure that commands from homebrew packages are found before system commands. You can do this by
 editing your .bashrc file. In Terminal, enter the following:
-> $ cd ~
->
-> $ open .bashrc  # Could also use vim or emacs
->
-> If /usr/local/sbin and /usr/local/bin are not already on your path, add them near the top of the file:
->
->     export PATH=/usr/local/sbin:/usr/local/bin:$PATH
->
-> Save and exit
+    $ cd ~
+
+    $ open .bashrc  # Could also use vim or emacs
+
+    If /usr/local/sbin and /usr/local/bin are not already on your path, add them near the top of the file:
+
+        export PATH=/usr/local/sbin:/usr/local/bin:$PATH
+
+    Save and exit
 
 1. Source your changes to .bashrc into the current shell. In Terminal, enter the following:
-> $ . ~/.bashrc
+
+    $ . ~/.bashrc
 
 1. Verify that homebrew is installed correctly. In Terminal, enter the following:
-> $ brew doctor
+
+    $ brew doctor
 
 1. Install git using homebrew. In Terminal, enter the following:
-> $ brew install git
+
+    $ brew install git
 
 1. Make a directory to hold all your programming projects. I call mine "Development" and I put it
 in my home directory.
@@ -85,34 +88,34 @@ options are [Sublime text](http://www.sublimetext.com/2), [textmate](https://mac
 1. Install python 3 using homebrew. This is the latest version of python, and while much existing
 code is still written in python 2, for new projects it is best to use python 3. In Terminal, enter
 the following:
-> $ brew install python3
+    $ brew install python3
 
 1. Verify the correct python3 is now on your path. In Terminal, enter the following:
-> $ which python3  # Should be "/usr/local/bin/python3"
+    $ which python3  # Should be "/usr/local/bin/python3"
 
 1. Pip in the standard package manager for Python. Packages provide useful functionality that is not available in Python itself. Ensure that you have the latest pip version installed:
-> $ pip install -U pip
+    $ pip install -U pip
 
 1. Install virtualenv and virtualenvwrapper for python3. The virtualenv package allows you to have individual
 environments for every python project, separate from the system package installs. The 
 virtualenvwrapper package is a utility to manage your virtualenvs. It keeps the virtualenvs separate
 from your code and also provides useful operations on virtualenvs.
 (To be investigated: Do virtualenv and virtualenvwrapper have to be installed globally?)
-> $ sudo pip install virtualenv virtualenvwrapper
+    $ sudo pip install virtualenv virtualenvwrapper
 
 1. Add virtualenvwrapper configuration to your .bashrc file. You can do this by
 editing your .bashrc file. In Terminal, enter the following:
-> $ cd ~
->
-> $ open .bashrc  # Could also use vim or emacs
->
-> If they are not already present, add the following 3 lines:
->
->     export WORKON_HOME=$HOME/.virtualenvs
->     export PROJECT_HOME=$HOME/Development
->     source /usr/local/bin/virtualenvwrapper.sh
->
-> Save and exit
+    $ cd ~
+
+    $ open .bashrc  # Could also use vim or emacs
+
+    If they are not already present, add the following 3 lines:
+
+        export WORKON_HOME=$HOME/.virtualenvs
+        export PROJECT_HOME=$HOME/Development
+        source /usr/local/bin/virtualenvwrapper.sh
+
+    Save and exit
 
 
 # Django Project Setup
@@ -124,8 +127,8 @@ You will need to do this once for each new Django project you create.
 1. Log in to GitHub and create a new repository.
 
     1. Click the '+' in the upper right and select "New repository"
-		1. Enter repository name ("my_project") and description ("My Django project")
-		1. Select "Initialize this repository with a README"
+    1. Enter repository name ("my_project") and description ("My Django project")
+    1. Select "Initialize this repository with a README"
     1. Under .gitignore select "Python"
     1. Under license select "MIT License"
     1. Click the "Create repository" button
@@ -176,7 +179,7 @@ deploying a Django project to Heroku. In terminal:
 
 1. The standard way of tracking package requirements for a Django project is a requirements.txt file. Whenever a fresh checkout of this project is made, all necessary dependencies can be installed by typing `pip install -r requirements.txt` in the Terminal. This is how Heroku will install your project dependencies. Use pip freeze to add the installed packages to requirements.txt
 
-		$ pip freeze > requirements.txt
+		$ pip freeze     requirements.txt
 
 1. Create a new Django project in the top-level git project directory:
 
