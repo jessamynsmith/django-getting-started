@@ -73,6 +73,8 @@ in my home directory.
     
 1. Sign up for a GitHub account: https://github.com/join
 
+1. Set up your GitHub SSH key so you don't have to type username and password on the command line every time: https://help.github.com/articles/generating-ssh-keys/
+
 1. Select a code editor. I like PyCharm but it does require a paid license. Other popular 
 options are [Sublime text](http://www.sublimetext.com/2), [textmate](https://macromates.com/),
  [Emacs](http://mally.stanford.edu/~sr/computing/emacs.html), and [Vim](http://vim.wikia.com/wiki/Tutorial).
@@ -178,24 +180,22 @@ deploying a Django project to Heroku. In terminal:
 > $ django-admin startproject my_project . # Note the trailing '.' which means 'current directory'
 
 1. Check that you have expected changes:
-> $ git status -u
->
-> On branch master
->
-> Your branch is up-to-date with 'origin/master'.
->
-> Untracked files:
->
->   (use "git add <file>..." to include in what will be committed)
->
-> 	manage.py
-> 	my_project/__init__.py
-> 	my_project/settings.py
-> 	my_project/urls.py
-> 	my_project/wsgi.py
-> 	requirements.txt
->
-> nothing added to commit but untracked files present (use "git add" to track)
+
+ ```$ git status -u
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	manage.py
+	my_project/__init__.py
+	my_project/settings.py
+	my_project/urls.py
+	my_project/wsgi.py
+	requirements.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
 
 1. Commit and push your changes.
 > $ git add -A
