@@ -88,7 +88,7 @@ the following:
 1. Verify the correct python3 is now on your path. In Terminal, enter the following:
 > $ which python3  # Should be "/usr/local/bin/python3"
 
-1. Ensure that 3 is up to date:
+1. Pip in the standard package manager for Python. Packages provide useful functionality that is not available in Python itself. Ensure that you have the latest pip version installed:
 > $ pip install -U pip
 
 1. Install virtualenv and virtualenvwrapper for python3. The virtualenv package allows you to have individual
@@ -122,7 +122,7 @@ You will need to do this once for each new Django project you create.
 1. Log in to GitHub and create a new repository.
 > Click the '+' in the upper right and select "New repository"
 >
-> Enter repository name ("starter") and description ("Starter Django project")
+> Enter repository name ("my_project") and description ("My Django project")
 >
 > Select "Initialize this repository with a README"
 >
@@ -139,16 +139,57 @@ You will need to do this once for each new Django project you create.
 >
 > $ git clone ```<VALUE_FROM_GITHUB>``` # Paste in the value you copied above
 
-1. Make a virtualenv and install django-toolbelt, which includes Django and useful packages for
+1. In Terminal, go into the cloned project directory:
+> $ cd my_project
+
+1. Make a virtualenv using python3:
+> $ mkvirtualenv my_project --python=python3  # Create a python3 virtualenv
+
+1. Install django-toolbelt, which includes Django and useful packages for
 deploying a Django project to Heroku. In terminal:
-> $ mkvirtualenv starter --python=python3  # Create a python3 virtualenv
->
 > $ pip install django-toolbelt
 
-1. Initialize your project as a Django project. In Terminal:
-> $ cd starter
+1. Check the list of installed packages using pip freeze. It should look something like this:
+> $ pip freeze
 >
-> $ django-admin startproject starter . # Note the trailing '.'
+> dj-database-url==0.3.0
+>
+> dj-static==0.0.6
+>
+> Django==1.8.4
+>
+> django-toolbelt==0.0.1
+>
+> gunicorn==19.3.0
+>
+> psycopg2==2.6.1
+>
+> static3==0.6.1
+>
+> wheel==0.24.0
+
+1. Explanation of installed packages:
+> dj-database-url - Required by Heroku to access the postgres database addon
+>
+> dj-static - Wrapper around static3 to allow Heroku to serve static files (e.g. CSS, JavaScript)
+>
+> Django - The main Django package
+>
+> django-toolbelt - The top-level package we installed to get all these packages
+>
+> gunicorn - Webserver recommended by Heroku for serving Django apps (similar to 'manage.py runserver', which is used for testing)
+>
+> psycopg2 - Python package for accessing postgres databases
+>
+> static3 - Python 3 version of static, which allows your static files to be served by WSGI
+>
+> wheel - Used by pip, installed by default
+
+1. The standard way of tracking package requirements for a Django project is a requirements.txt file. Whenever a fresh checkout of this project is made, all necessary dependencies can be installed by typing `pip install -r requirements.txt` in the Terminal. This is how Heroku will install your project dependencies. Use pip freeze to add the installed packages to requirements.txt
+> $ pip freeze > requirements.txt
+
+1. Create a new Django project in the top-level git project directory:
+> $ django-admin startproject my_project . # Note the trailing '.'
 
 
 # Resources
