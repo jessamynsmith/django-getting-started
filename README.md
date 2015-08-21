@@ -181,21 +181,20 @@ deploying a Django project to Heroku. In terminal:
 
 1. Check that you have expected changes:
 
- ```$ git status -u
-On branch master
-Your branch is up-to-date with 'origin/master'.
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-	manage.py
-	my_project/__init__.py
-	my_project/settings.py
-	my_project/urls.py
-	my_project/wsgi.py
-	requirements.txt
-
-nothing added to commit but untracked files present (use "git add" to track)
-```
+		$ git status -u
+		On branch master
+		Your branch is up-to-date with 'origin/master'.
+		Untracked files:
+			(use "git add <file>..." to include in what will be committed)
+		
+			manage.py
+			my_project/__init__.py
+			my_project/settings.py
+			my_project/urls.py
+			my_project/wsgi.py
+			requirements.txt
+		
+		nothing added to commit but untracked files present (use "git add" to track)
 
 1. Commit and push your changes.
 > $ git add -A
