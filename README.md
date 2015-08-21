@@ -49,15 +49,15 @@ this too daunting, you can use the open command.
 
 1. Ensure that commands from homebrew packages are found before system commands. You can do this by
 editing your .bashrc file. In Terminal, enter the following:
-    $ cd ~
-
-    $ open .bashrc  # Could also use vim or emacs
-
-    If /usr/local/sbin and /usr/local/bin are not already on your path, add them near the top of the file:
-
-        export PATH=/usr/local/sbin:/usr/local/bin:$PATH
-
-    Save and exit
+> $ cd ~
+>
+> $ open .bashrc  # Could also use vim or emacs
+>
+> If /usr/local/sbin and /usr/local/bin are not already on your path, add them near the top of the file:
+>
+>     export PATH=/usr/local/sbin:/usr/local/bin:$PATH
+>
+> Save and exit
 
 1. Source your changes to .bashrc into the current shell. In Terminal, enter the following:
 
