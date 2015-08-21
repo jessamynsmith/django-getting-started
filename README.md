@@ -8,14 +8,18 @@ I will omit here for the sake of simplicity, but feel free to modify to suit you
 
 Notes:
 
-1. Any line that is preceeded by a '$' means that is a command to be typed into Terminal.
+1. Any line that is preceded by a '$' means that is a command to be typed into Terminal.
 1. If you've completed a given step in the past, you can skip that step and go to the next.
 1. Any value that is in angle brackets and capitalized (e.g. <SOME_VALUE>) is a placeholder and must
 be replaced by an actual value.
 
 
-Development Environment Setup
------------------------------
+# One-Time Setup
+
+You will need to do this once on each computer you want to set up for Django development.
+
+
+## Development Environment Setup
 
 1. Install XCode from the Apple website.
 > XCode download: https://developer.apple.com/xcode/downloads/
@@ -68,10 +72,13 @@ editing your .bashrc file. In Terminal, enter the following:
 in my home directory.
     
 1. Sign up for a GitHub account: https://github.com/join
-    
 
-Python Environment Setup
-------------------------
+1. Select a code editor. I like PyCharm but it does require a paid license. Other popular 
+options are [Sublime text](http://www.sublimetext.com/2), [textmate](https://macromates.com/),
+ [Emacs](http://mally.stanford.edu/~sr/computing/emacs.html), and [Vim](http://vim.wikia.com/wiki/Tutorial).
+
+
+## Python Environment Setup
 
 1. Install python 3 using homebrew. This is the latest version of python, and while much existing
 code is still written in python 2, for new projects it is best to use python 3. In Terminal, enter
@@ -105,8 +112,12 @@ editing your .bashrc file. In Terminal, enter the following:
 >
 > Save and exit
 
-Django Project Setup
---------------------
+
+# Django Project Setup
+
+You will need to do this once for each mew Django project you create.
+
+## Create Django Project and add to GitHub
 
 1. Log in to GitHub and create a new repository.
 > Click the '+' in the upper right and select "New repository"
@@ -137,11 +148,10 @@ deploying a Django project to Heroku. In terminal:
 1. Initialize your project as a Django project. In Terminal:
 > $ cd starter
 >
-> $ django-admin startproject starter .
+> $ django-admin startproject starter . # Note the trailing '.'
 
 
-Resources
----------
+# Resources
 
 http://tutorial.djangogirls.org/en/index.html
 
