@@ -115,7 +115,7 @@ editing your .bashrc file. In Terminal, enter the following:
 
 # Django Project Setup
 
-You will need to do this once for each mew Django project you create.
+You will need to do this once for each new Django project you create.
 
 ## Create Django Project and add to GitHub
 
