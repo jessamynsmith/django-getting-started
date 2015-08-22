@@ -8,7 +8,8 @@ I will omit here for the sake of simplicity, but feel free to modify to suit you
 
 Notes:
 
-1. Any line that is preceded by a '$' means that is a command to be typed into Terminal.
+1. You will need to use the command line for parts of this guide. If you are using OSX, you can use Terminal. On Linux, you can open a shell of your choosing. Windows development is harder than OSX/Linux, but you can probably get by with the cmd prompt.
+1. Any line that is preceded by a '$' means that is a command to be typed on the command line.
 1. If you've completed a given step in the past, you can skip that step and go to the next.
 1. Any value that is in angle brackets and capitalized (e.g. <SOME_VALUE>) is a placeholder and must
 be replaced by an actual value.
