@@ -82,6 +82,8 @@ in my home directory.
 1. Select a code editor. I like PyCharm but it does require a paid license. Other popular 
 options are [Sublime text](http://www.sublimetext.com/2), [textmate](https://macromates.com/),
  [Emacs](http://mally.stanford.edu/~sr/computing/emacs.html), and [Vim](http://vim.wikia.com/wiki/Tutorial).
+ 
+ 1. Configure your text editor to use spaces instead of tabs. The standard in the Python community is to replace each tab character with 4 spaces.
 
 
 ## Python Environment Setup
@@ -180,7 +182,7 @@ deploying a Django project to Heroku. In terminal:
 
 1. The standard way of tracking package requirements for a Django project is a requirements.txt file. Whenever a fresh checkout of this project is made, all necessary dependencies can be installed by typing `pip install -r requirements.txt` in the Terminal. This is how Heroku will install your project dependencies. Use pip freeze to add the installed packages to requirements.txt
 
-		$ pip freeze     requirements.txt
+		$ pip freeze > requirements.txt
 
 1. Create a new Django project in the top-level git project directory:
 
@@ -211,10 +213,14 @@ deploying a Django project to Heroku. In terminal:
     
     1. In a browser, open http://127.0.0.1:8000 where you should see "It worked!"
     
+1. Edit your .gitignore file to include an entry for .sql files. By default, Django will use sqlite3 (a basic database that is bundled with Python) and you don't want to commit your database file to your repository! Open .gitignore and add the following at the end of the file:
+
+		*.sql*
+    
 1. Commit and push your changes.
 
 		$ git add -A  # Add all modified files to staging
-		$ git commit -m "Initialized Django project"  # Commit files in staging
+		$ git commit -m "Initialized Django project"  # Commit staged filed
 		$ git push origin master  # Push commit to github
 
 1. Go to your GitHub project in the browser and you should see your changes.
@@ -229,9 +235,103 @@ Now comes the fun part: making your Django app do something interesting!
 		$ cd ~/Development/my_project
 		$ workon my_project
 
-1. In order to add functionality to your project, you need to make an app. An app contains a cohesive set of functions, e.g. user account management. To create an app:
+### Creating a New App
 
-		$ python manage.py startapp my_app
+In Django, an app is a cohesive collection of functionality inside a project. An example of an app might be user account management. Ideally, pps should be self-contained so that an app from one Django project can be reused in another Django project. You will need to follow these instructions each time you want to add a new aspect to your project.
+
+1. To create an app:
+
+		$ python manage.py startapp app1
+		
+1. You will need to add your new app to my_project/settings.py. This lets Django know about your app, e.g. for creating/running migrations.
+
+		INSTALLED_APPS = (
+				...
+    		'app1',
+		)
+
+1. Create a urls.py file for your new app. Inside the app1 directory, create urls.py and enter the following:		
+		
+		from django.conf.urls import url
+		
+		from . import views  # Import the views for this app
+		
+		
+		urlpatterns = [
+		]
+		
+1. Create a templates directory with app-specific subdirectory. Inside the app1 directory, create a new directory named templates, and within that directory, create a directory named app1. It may seem strange to have app1 with the app1/templates directory, but it is important so that templates from different apps do not conflict with each other. Your directory structure should now look like the following:
+
+		my_project/
+		    app1/
+		        migrations/
+		        templates/
+		            app1/
+		        admin.py
+		        ....
+		        urls.py
+		        views.py
+		    my_project/
+		        settings.py
+		        ...
+
+1. Edit my_project/urls.py and include the urls for your new app. Once you are done, urls.py should look like this:
+
+		from django.conf.urls import include, url
+		from django.contrib import admin
+		
+		from app1 import views as app1_views  # Import for app1 views
+		
+		urlpatterns = [
+				url(r'^admin/', include(admin.site.urls)),
+				url(r'^app1/', include('app1.urls')),  # For all requests to /app1, look at urls in app1.urls
+		]
+		
+### Creating a new view
+
+You will need to follow these instructions for every new view you create. Apps typically have multiple views.
+
+1. Create a template for your new view, called index.html, inside the app1/templates/app1 directory. Django templates can do variable substitution, looping, and all sorts of other useful operations, but for now, we will make a very simple "Hello World" template containing plain HTML. Edit index.html to contain the following:
+
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+		</head>
+		<body>
+			<h3>Hello World!</h3>
+			<p>I just made the index page for my first Django app. :-)</p>
+		</body>
+		</html>
+
+1. Create the view code for the "Hello World" view. This is an extremely simple view that takes a request and renders the app1/index.html template. (Note that we do not need to say prepend "templates" to the path -- Django knows to look at templates.) Edit app1/views.py to contain the following:
+
+		from django.shortcuts import render
+		
+		
+		def index(request):
+				context = {}  # So far, we are not specifying any custom context
+				return render(request, 'app1/index.html', context)
+
+1. Add your new view to the app urls. Edit app1/urls.py to add a url for your new view. Once you are done, the file should look like the following
+
+		from django.conf.urls import url
+		
+		from . import views  # Import the views for this app
+		
+		
+		urlpatterns = [
+				url(r'^$', views.index, name='index'),  # Url for index view
+		]
+		
+1. Verify that your new view is available by navigating to the new app in the browser: http://127.0.0.1:8000/app1/ (Note that you need the /app1 because your specified in the top-level urls.py that all urls for app1 would be available at /app1)
+
+1. If your code is working, commit and push your changes.
+
+		$ git status -u  # Check what files have been modified
+		$ git diff  # Look over your changes (always a good idea to ensure nothing odd snuck in there)
+		$ git add -A  # Add all modified files to staging
+		$ git commit -m "Added first view"  # Commit staged filed
+		$ git push origin master  # Push commit to github
 
 
 # Resources
@@ -241,5 +341,3 @@ http://tutorial.djangogirls.org/en/index.html
 https://docs.djangoproject.com/en/1.8/intro/tutorial01/
 
 https://devcenter.heroku.com/articles/getting-started-with-django#prerequisites
-
-TODO Add more explanation of what each step is doing.
