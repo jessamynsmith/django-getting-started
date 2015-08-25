@@ -188,7 +188,23 @@ deploying a Django project to Heroku. In terminal:
 
 		$ django-admin startproject my_project . # Note the trailing '.' which means 'current directory'
 
-1. Check that you have expected changes:
+1. Edit your .gitignore file to include an entry for .sql files. By default, Django will use sqlite3 (a basic database that is bundled with Python) and you don't want to commit your database file to your repository! Open .gitignore and add the following at the end of the file:
+
+		*.sql*
+
+1. This is a good time to verify that your project runs (always a good idea before committing code!) and if it does, commit the changes.
+
+### Process for Committing Code
+
+Commit as often as you can, but only commit working code. Every time you have added some piece of functionality and your project runs successfully, it's a good idea to commit. Outlined here is a good process to follow every time you commit code.
+
+1. In Terminal, run your Django app:
+
+		$ python manage.py runserver
+		
+1. In a browser, open [http://127.0.0.1:8000](http://127.0.0.1:8000) where you should see "It worked!"
+
+1. Check that the list of changed files is as expected:
 
 		$ git status -u
 		On branch master
@@ -205,30 +221,32 @@ deploying a Django project to Heroku. In terminal:
 		
 		nothing added to commit but untracked files present (use "git add" to track)
 		
-1. Verify that your project runs (always a good idea before committing code!).
+1. Check your diff to see what is in it and make sure it all makes sense:
 
-    1. In Terminal, run your Django app:
-        
-        $ python manage.py runserver
-    
-    1. In a browser, open http://127.0.0.1:8000 where you should see "It worked!"
-    
-1. Edit your .gitignore file to include an entry for .sql files. By default, Django will use sqlite3 (a basic database that is bundled with Python) and you don't want to commit your database file to your repository! Open .gitignore and add the following at the end of the file:
+		$ git diff
 
-		*.sql*
-    
 1. Commit and push your changes.
 
 		$ git add -A  # Add all modified files to staging
-		$ git commit -m "Initialized Django project"  # Commit staged filed
+		$ git commit -m "Initialized Django project"  # Commit staged files
 		$ git push origin master  # Push commit to github
 
-1. Go to your GitHub project in the browser and you should see your changes.
+1. You can go to your GitHub project in the browser and you should see your changes.
 
+1. Summary of essential commit process:
+
+		$ python manage.py runserver  # And check in browser [http://127.0.0.1:8000](http://127.0.0.1:8000)
+		$ git status -u  # Check what files have been modified
+		$ git diff  # Look over your changes (always a good idea to ensure it is as expected)
+		$ git add -A  # Add all modified files to staging
+		$ git commit -m "Added first view"  # Commit staged files
+		$ git push origin master  # Push commit to github
 
 ## Add Functionality to Django App
 
 Now comes the fun part: making your Django app do something interesting!
+
+### Starting a new work session
 
 1. Ensure you are set up to start working. You will want to do this each time you start a working. Open Terminal, and do the following:
 
@@ -245,6 +263,7 @@ In Django, an app is a cohesive collection of functionality inside a project. An
 		
 1. You will need to add your new app to my_project/settings.py. This lets Django know about your app, e.g. for creating/running migrations.
 
+		# settings.py
 		INSTALLED_APPS = (
 				...
     		'app1',
@@ -252,6 +271,7 @@ In Django, an app is a cohesive collection of functionality inside a project. An
 
 1. Create a urls.py file for your new app. Inside the app1 directory, create urls.py and enter the following:		
 		
+		# app1/urls.py
 		from django.conf.urls import url
 		
 		from . import views  # Import the views for this app
@@ -277,6 +297,7 @@ In Django, an app is a cohesive collection of functionality inside a project. An
 
 1. Edit my_project/urls.py and include the urls for your new app. Once you are done, urls.py should look like this:
 
+		# urls.py
 		from django.conf.urls import include, url
 		from django.contrib import admin
 		
@@ -287,12 +308,15 @@ In Django, an app is a cohesive collection of functionality inside a project. An
 				url(r'^app1/', include('app1.urls')),  # For all requests to /app1, look at urls in app1.urls
 		]
 		
+1. [Verify and commit your code](#process-for-committing-code)
+		
 ### Creating a new view
 
 You will need to follow these instructions for every new view you create. Apps typically have multiple views.
 
 1. Create a template for your new view, called index.html, inside the app1/templates/app1 directory. Django templates can do variable substitution, looping, and all sorts of other useful operations, but for now, we will make a very simple "Hello World" template containing plain HTML. Edit index.html to contain the following:
 
+		# app1/templates/app1/index.html
 		<!DOCTYPE html>
 		<html lang="en">
 		<head>
@@ -305,6 +329,7 @@ You will need to follow these instructions for every new view you create. Apps t
 
 1. Create the view code for the "Hello World" view. This is an extremely simple view that takes a request and renders the app1/index.html template. (Note that we do not need to say prepend "templates" to the path -- Django knows to look at templates.) Edit app1/views.py to contain the following:
 
+		# app1/views.py
 		from django.shortcuts import render
 		
 		
@@ -314,6 +339,7 @@ You will need to follow these instructions for every new view you create. Apps t
 
 1. Add your new view to the app urls. Edit app1/urls.py to add a url for your new view. Once you are done, the file should look like the following
 
+		# app1/urls.py
 		from django.conf.urls import url
 		
 		from . import views  # Import the views for this app
@@ -323,15 +349,110 @@ You will need to follow these instructions for every new view you create. Apps t
 				url(r'^$', views.index, name='index'),  # Url for index view
 		]
 		
-1. Verify that your new view is available by navigating to the new app in the browser: http://127.0.0.1:8000/app1/ (Note that you need the /app1 because your specified in the top-level urls.py that all urls for app1 would be available at /app1)
+1. Verify that your new view is available by navigating to the new app in the browser: [http://127.0.0.1:8000/app1/](http://127.0.0.1:8000/app1/) (Note that you need the /app1 because your specified in the top-level urls.py that all urls for app1 would be available at /app1)
 
-1. If your code is working, commit and push your changes.
+1. [Verify and commit your code](#process-for-committing-code).
+		
+### Creating a new library
 
-		$ git status -u  # Check what files have been modified
-		$ git diff  # Look over your changes (always a good idea to ensure nothing odd snuck in there)
-		$ git add -A  # Add all modified files to staging
-		$ git commit -m "Added first view"  # Commit staged filed
-		$ git push origin master  # Push commit to github
+External libraries can be installed in your virtualenv using pip, but you may also want to create libraries within your application. A library is a related set of functions, e.g. for accessing an external API like Amazon S3. This code isn't necessarily related to any specific Django app, but it is needed for your project.
+
+1. Create a directory for your libraries, called "libs" in the root of your project, next to app1 and my_project. You only need to do this once per project.
+
+1. Inside the "libs" directory, create a new python file for the library you want to create. You need to do this once for every library you add. In this case, we will be creating a library to access the [Open Weather Map API](http://openweathermap.org/api), so we will call the file open_weather_map.py
+
+1. The [requests](http://www.python-requests.org/en/latest/) library is the easiest way to make API calls from Python, so install requests and add it to the project requirements. Ensure that you are in the project root directory and the virtualenv is active first!
+
+		$ workon my_project
+		$ pip install requests
+		$ pip freeze > requirements.txt
+		
+1. Open libs/open_weather_map.py, and make a class for accessing the Open Weather Map API. In general, when accessing an external API, it's a good idea to make a class that has at least the base API URL as a member.
+
+		# libs/open_weather_map.py
+		import requests
+		
+		
+		class OpenWeatherMap():
+		
+				def __init__(self):
+						# This is the base URL for the API and will be common to all requests
+						self.api_url = 'http://api.openweathermap.org/data/2.5/'
+						
+1. Now that we have an Open Weather Map class, let's use it to get some data! There are many options on the API we've chosen; for now, let's do the [5 day/3 hour forecast](http://openweathermap.org/forecast5). This will be a GET request, since we are retrieving (not modifying) data on the server. The documentation indicates that we must pass in some form of location information to indicate which forecast we want. The requests library makes it easy:
+
+		# libs/open_weather_map.py
+		import requests
+		
+		
+		class OpenWeatherMap(object):
+				
+				def __init__(self):
+						self.api_url = 'http://api.openweathermap.org/data/2.5/'
+		
+				def get_forecast(self):
+						# Append the "forecast" path to the base API URL
+						url = '%sforecast' % self.api_url
+		
+						# URL parameters
+						params = {
+								'lat': -33.8650,
+								'lon': 151.2094
+						}
+		
+						# Do a get request on the forecast url, with the lat/lon params
+						response = requests.get(url, params=params)
+		
+						# It's always a good idea to initialize results to empty, and update if data received
+						results = {}
+						# If the request was successful
+						if response.status_code == requests.codes.ok:
+								# Get the response body in JSON format
+								results = response.json()
+		
+						return results
+
+1. In order to display the retrieved information on the index page, we need to first call the API from our view code. This means we must import our library, instantiate the class, call our forecast method, and put the resulting data into the view context so the template can access it. Your app1 view code should look something like this when you are done:
+
+		# app1/views.py
+		from django.shortcuts import render
+		
+		from libs.open_weather_map import OpenWeatherMap
+		
+		
+		def index(request):
+				open_weather_map = OpenWeatherMap()
+		
+				context = {
+						'forecast': open_weather_map.get_forecast()
+				}
+				return render(request, 'app1/index.html', context)
+				
+1. At last, we can add the weather data to our page! You can check the [API documentation](http://openweathermap.org/forecast5#JSON) to see the format of the returned JSON data. We will use that format information to display data in our page. You can start to see the power of django templates, as we reference members of the forecast data structure and loop over the items in the forecast list.
+
+		# app1/templates/app1/index.html
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+		</head>
+		<body>
+				<h3>Hello World!</h3>
+				<p>I just made the index page for my first Django app. :-)</p>
+		
+				<div>Location: {{ forecast.city.name }} ({{forecast.city.coord.lat}}, {{forecast.city.coord.lon}})</div>
+				<br>
+				<hr>
+		
+				{% for item in forecast.list %}
+						<div>Date: {{ item.dt_txt }}</div>
+						<div>Description: {{ item.weather.0.main }}</div>
+						<div>Temperature (K): {{ item.main.temp }}</div>
+						<hr>
+				{% endfor %}
+		</body>
+		</html>
+
+1. Congratulations, you just retrieved data from an external API and displayed it within a Django site! Probably a good time to [review your changes and commit your code](#process-for-committing-code). :)
 
 
 # Resources
