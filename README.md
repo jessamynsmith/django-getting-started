@@ -295,17 +295,20 @@ In Django, an app is a cohesive collection of functionality inside a project. An
 		        settings.py
 		        ...
 
-1. Edit my_project/urls.py and include the urls for your new app. Once you are done, urls.py should look like this:
+1. Edit my_project/urls.py and include the urls for your new app. Also, add a redirect so that anyone going to the base URL for your project will be redirected to app1. Once you are done, urls.py should look like this:
 
 		# urls.py
 		from django.conf.urls import include, url
 		from django.contrib import admin
+		from django.views.generic import RedirectView
 		
-		from app1 import views as app1_views  # Import for app1 views
+		from app1 import urls as app1_urls  # Import for app1 urls
+		
 		
 		urlpatterns = [
 				url(r'^admin/', include(admin.site.urls)),
-				url(r'^app1/', include('app1.urls')),  # For all requests to /app1, look at urls in app1.urls
+				url(r'^$', RedirectView.as_view(url='app1', permanent=True)), # Redirect base URL to app1
+				url(r'^app1/', include(app1_urls), name='app1'),
 		]
 		
 1. [Verify and commit your code](#process-for-committing-code)
@@ -349,7 +352,7 @@ You will need to follow these instructions for every new view you create. Apps t
 				url(r'^$', views.index, name='index'),  # Url for index view
 		]
 		
-1. Verify that your new view is available by navigating to the new app in the browser: [http://127.0.0.1:8000/app1/](http://127.0.0.1:8000/app1/) (Note that you need the /app1 because your specified in the top-level urls.py that all urls for app1 would be available at /app1)
+1. Verify that your new view is available by navigating to the new app in the browser: [http://127.0.0.1:8000/app1/](http://127.0.0.1:8000/app1/) Note that you need the /app1 to go directly to app1, because the top-level urls.py links app1 urls to the /app1 path. Because we added a redirect, if you go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) you will be redirected to /app1.
 
 1. [Verify and commit your code](#process-for-committing-code).
 		
