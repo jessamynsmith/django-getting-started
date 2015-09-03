@@ -451,16 +451,16 @@ External libraries can be installed in your virtualenv using pip, but you may al
 				}
 				return render(request, 'app1/index.html', context)
 				
-1. At last, we can add the weather data to our page! You can check the [API documentation](http://openweathermap.org/forecast5#JSON) to see the format of the returned JSON data. We will use that format information to display data in our page. You can start to see the power of django templates, as we reference members of the forecast data structure and loop over the items in the forecast list.
+1. At last, we can add the weather data to our page! You don't need the placeholder text anymore, so you can delete that. You can check the [API documentation](http://openweathermap.org/forecast5#JSON) to see the format of the returned JSON data. We will use that format information to display data in our page. You can start to see the power of django templates, as we reference members of the forecast data structure and loop over the items in the forecast list.
 
 		# app1/templates/app1/index.html
 		<!DOCTYPE html>
 		<html lang="en">
 		<head>
+		<title>Local Forecast</title>
 		</head>
 		<body>
-				<h3>Hello World!</h3>
-				<p>I just made the index page for my first Django app. :-)</p>
+				<h3>Local Forecast</h3>
 		
 				<div>Location: {{ forecast.city.name }} ({{forecast.city.coord.lat}}, {{forecast.city.coord.lon}})</div>
 				<br>
