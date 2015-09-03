@@ -311,7 +311,11 @@ In Django, an app is a cohesive collection of functionality inside a project. An
 				url(r'^app1/', include(app1_urls), name='app1'),
 		]
 		
-1. [Verify and commit your code](#process-for-committing-code)
+1. In Terminal, run your Django app:
+
+		$ python manage.py runserver
+		
+1. In a browser, open [http://127.0.0.1:8000](http://127.0.0.1:8000). This should redirect you to [http://127.0.0.1:8000/app1](http://127.0.0.1:8000/app1), which then displays the standard Django 404 page. Not to worry! This is because we've set up an automatic redirect from the root to app1, but the urls.py file for app1 doesn't have any routes in urlpatterns yet. Whenever you get this error, you can check the address in the url bar in the browser and make sure it matches a pattern in urls.py.
 		
 ### Creating a new view
 
@@ -350,6 +354,22 @@ You will need to follow these instructions for every new view you create. Apps t
 		
 		urlpatterns = [
 				url(r'^$', views.index, name='index'),  # Url for index view
+		]
+		
+1. It's going to get tedious appending the /app1 to your url every time, so let's add a redirect. This means that anyone going to the base URL for your project will be redirected to app1. You would typically only do this once per project, so that the first time someone goes to your domain, they are taken to the appropriate landing page. Once you are done, urls.py should look like this:
+
+		# urls.py
+		from django.conf.urls import include, url
+		from django.contrib import admin
+		from django.views.generic import RedirectView
+		
+		from app1 import urls as app1_urls  # Import for app1 urls
+		
+		
+		urlpatterns = [
+				url(r'^admin/', include(admin.site.urls)),
+				url(r'^$', RedirectView.as_view(url='app1', permanent=True)), # Redirect base URL to app1
+				url(r'^app1/', include(app1_urls), name='app1'),
 		]
 		
 1. Verify that your new view is available by navigating to the new app in the browser: [http://127.0.0.1:8000/app1/](http://127.0.0.1:8000/app1/) Note that you need the /app1 to go directly to app1, because the top-level urls.py links app1 urls to the /app1 path. Because we added a redirect, if you go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) you will be redirected to /app1.
