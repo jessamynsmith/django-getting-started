@@ -28,7 +28,7 @@ You will need to do this once on each computer you want to set up for Django dev
 > Detailed steps available here: http://railsapps.github.io/xcode-command-line-tools.html
 
 1. Install the command line tools. This allows you to compile packages from source.
-> Open Terminal app (I recommend adding it to your dock, as you will need it often)
+> Open the command line. For OSX, this means opening Terminal app (I recommend adding it to your dock, as you will need it often)
 >
 > At the prompt, enter "gcc":
 >
@@ -38,7 +38,7 @@ You will need to do this once on each computer you want to set up for Django dev
 
 1. Install homebrew. This gives you easy access to useful system packages. Up-to-date install
 instructions can be found on the homebrew site: http://brew.sh/
-> In Terminal:
+> On the command line:
 >
 > $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -49,7 +49,7 @@ this too daunting, you can use the open command.
 > Vim basics: http://vim.wikia.com/wiki/Tutorial
 
 1. Ensure that commands from homebrew packages are found before system commands. You can do this by
-editing your .bashrc file. In Terminal, enter the following:
+editing your .bashrc file. On the command line, enter the following:
 > $ cd ~
 >
 > $ open .bashrc  # Could also use vim or emacs
@@ -60,15 +60,15 @@ editing your .bashrc file. In Terminal, enter the following:
 >
 > Save and exit
 
-1. Source your changes to .bashrc into the current shell. In Terminal, enter the following:
+1. Source your changes to .bashrc into the current shell. On the command line, enter the following:
 
     $ . ~/.bashrc
 
-1. Verify that homebrew is installed correctly. In Terminal, enter the following:
+1. Verify that homebrew is installed correctly. On the command line, enter the following:
 
     $ brew doctor
 
-1. Install git using homebrew. In Terminal, enter the following:
+1. Install git using homebrew. On the command line, enter the following:
 
     $ brew install git
 
@@ -89,11 +89,11 @@ options are [Sublime text](http://www.sublimetext.com/2), [textmate](https://mac
 ## Python Environment Setup
 
 1. Install python 3 using homebrew. This is the latest version of python, and while much existing
-code is still written in python 2, for new projects it is best to use python 3. In Terminal, enter
+code is still written in python 2, for new projects it is best to use python 3. On the command line, enter
 the following:
     $ brew install python3
 
-1. Verify the correct python3 is now on your path. In Terminal, enter the following:
+1. Verify the correct python3 is now on your path. On the command line, enter the following:
     $ which python3  # Should be "/usr/local/bin/python3"
 
 1. Pip in the standard package manager for Python. Packages provide useful functionality that is not available in Python itself. Ensure that you have the latest pip version installed:
@@ -107,7 +107,7 @@ from your code and also provides useful operations on virtualenvs.
     $ sudo pip install virtualenv virtualenvwrapper
 
 1. Add virtualenvwrapper configuration to your .bashrc file. You can do this by
-editing your .bashrc file. In Terminal, enter the following:
+editing your .bashrc file. On the command line, enter the following:
     $ cd ~
 
     $ open .bashrc  # Could also use vim or emacs
@@ -137,13 +137,13 @@ You will need to do this once for each new Django project you create.
     1. Click the "Create repository" button
     1. On the right-hand side, select the value in the HTTPS clone URL box and copy it
 
-1. Clone your project. Open Terminal, and do the following:
+1. Clone your project. On the command line, do the following:
 
     $ cd ~/Development
     
     $ git clone ```<VALUE_FROM_GITHUB>```  # Paste in the value you copied above
 
-1. In Terminal, go into the cloned project directory:
+1. On the command line, go into the cloned project directory:
 
     $ cd my_project
 
@@ -152,7 +152,7 @@ You will need to do this once for each new Django project you create.
     $ mkvirtualenv my_project --python=python3  # Create a python3 virtualenv
 
 1. Install django-toolbelt, which includes Django and useful packages for
-deploying a Django project to Heroku. In terminal:
+deploying a Django project to Heroku. On the command line:
 
     $ pip install django-toolbelt
 
@@ -180,7 +180,7 @@ deploying a Django project to Heroku. In terminal:
 		static3 - Python 3 version of static, which allows your static files to be served by WSGI
 		wheel - Used by pip, installed by default
 
-1. The standard way of tracking package requirements for a Django project is a requirements.txt file. Whenever a fresh checkout of this project is made, all necessary dependencies can be installed by typing `pip install -r requirements.txt` in the Terminal. This is how Heroku will install your project dependencies. Use pip freeze to add the installed packages to requirements.txt
+1. The standard way of tracking package requirements for a Django project is a requirements.txt file. Whenever a fresh checkout of this project is made, all necessary dependencies can be installed by typing `pip install -r requirements.txt` on the command line. This is how Heroku will install your project dependencies. Use pip freeze to add the installed packages to requirements.txt
 
 		$ pip freeze > requirements.txt
 
@@ -198,7 +198,7 @@ deploying a Django project to Heroku. In terminal:
 
 Commit as often as you can, but only commit working code. Every time you have added some piece of functionality and your project runs successfully, it's a good idea to commit. Outlined here is a good process to follow every time you commit code.
 
-1. In Terminal, run your Django app:
+1. On the command line, run your Django app:
 
 		$ python manage.py runserver
 		
@@ -248,7 +248,7 @@ Now comes the fun part: making your Django app do something interesting!
 
 ### Starting a new work session
 
-1. Ensure you are set up to start working. You will want to do this each time you start a working. Open Terminal, and do the following:
+1. Ensure you are set up to start working. You will want to do this each time you start a working. On the command line, do the following:
 
 		$ cd ~/Development/my_project
 		$ workon my_project
@@ -311,7 +311,7 @@ In Django, an app is a cohesive collection of functionality inside a project. An
 				url(r'^app1/', include(app1_urls), name='app1'),
 		]
 		
-1. In Terminal, run your Django app:
+1. On the command line, run your Django app:
 
 		$ python manage.py runserver
 		
@@ -451,7 +451,7 @@ External libraries can be installed in your virtualenv using pip, but you may al
 				}
 				return render(request, 'app1/index.html', context)
 				
-1. At last, we can add the weather data to our page! You don't need the placeholder text anymore, so you can delete that. You can check the [API documentation](http://openweathermap.org/forecast5#JSON) to see the format of the returned JSON data. We will use that format information to display data in our page. You can start to see the power of django templates, as we reference members of the forecast data structure and loop over the items in the forecast list.
+1. At last, we can add the weather data to our page! You don't need the "Hello World" or "first Django app" placeholder text anymore, so you can delete that. You can check the [API documentation](http://openweathermap.org/forecast5#JSON) to see the format of the returned JSON data. We will use that format information to display data in our page. You can start to see the power of django templates, as we reference members of the forecast data structure and loop over the items in the forecast list.
 
 		# app1/templates/app1/index.html
 		<!DOCTYPE html>
@@ -476,6 +476,70 @@ External libraries can be installed in your virtualenv using pip, but you may al
 		</html>
 
 1. Congratulations, you just retrieved data from an external API and displayed it within a Django site! Probably a good time to [review your changes and commit your code](#process-for-committing-code). :)
+
+## Deploy Django App to Heroku
+
+Now that you have a basic functional weather project, you may want to share with friends or family. Unfortunately, as long as the project is running only on your own computer, you cannot share it with anyone remotely. Luckily, there are free hosting services available that make this easy. We are going to use Heroku, but there are many options.
+
+1. Sign up for a free [Heroku](https://signup.heroku.com/login) account, if you don't already have one. You only need to do this once.
+
+### Create Heroku App
+1. In Heroku, navigate to Account -> Dashboard.
+1. Click the '+' in the upper right to create a new app for your project.
+1. You can enter a name or leave it blank and Heroku will create one for you.
+1. Click the "Create App" button.
+
+### Configure the Heroku CLI
+
+1. On the Heroku page for your newly created app, ensure you are on the "Deploy" tab and the "Heroku git" sub-tab.
+1. Follow the instructions for installing the [Heroku toolbelt](https://toolbelt.heroku.com).
+1. On the command line, log in to Heroku using the username and password you set up on the Heroku website:
+
+		$ heroku login
+		
+1. Connect your Heroku app to your local git project, where <HEROKU_APP_NAME> is the name of the app on Heroku (visible in the center top of the app page on the Heroku site):
+
+		$ heroku git:remote -a <HEROKU_APP_NAME>
+
+
+### Set up GitHub -> Heroku Deployment
+
+1. On the Heroku page for your newly created app, click the "Deploy" tab, then click the "GitHub"/"Connect to GitHub" sub-tab.
+1. Click the "Connect to GitHub" button. This will bring up an authorization popup.
+1. In the popup, click "Authorize application" to connect your Heroku account to your GitHub account. This will require you to log into GitHub if you aren't already logged in.
+1. Enter the GitHub repository name for your source code into the text input and click the "Search" button.
+1. Once you have the correct repository displayed, click the "connect" button.
+1. With the "master" branch selected, click the "Enable Automatic Deploys" button.
+1. To deploy the code currently on GitHub, click "Deploy Branch".
+1. Once deployment is complete, click the "View" button to check if the app is correctly deployed.
+1. We haven't finished setting up Heroku yet, so you should get an error page in the browser. To find out what the error is, go to the command line, and in the project directory, check the logs:
+
+		$ heroku logs
+		
+1. You should see an error something like "No web processes running". This is because we haven't started any web processes, and to do that, we need to define what a web process is for this app. Heroku relies on a Procfile to run your app, so let's create one now. Usually, Django web processes are run with gunicorn (installed with the django-toolbelt), using the wsgi file generated when the Django project was created. NOTE! The Procfile MUST be in the root of your project. Under the top level my_project directory, create a file named Procfile with the following content:
+
+		# Procfile
+		web: gunicorn my_project.wsgi --log-file -
+		
+1. Let's [review your changes and commit your code](#process-for-committing-code) so the Procfile is available to Heroku. This new commit will be automatically deployed.
+
+1. You can check deployment status on the command line:
+
+		$ heroku releases
+		
+1. Once the new release is complete, you can tell Heroku to create a web process:
+
+		$ heroku ps:scale web=1
+
+1. Refresh the browser window where you were viewing your heroku app. You should now see your app up and running with weather data!
+
+
+# TODO
+
+- Take location input
+- pyflakes
+- html validator
+- unit tests
 
 
 # Resources
