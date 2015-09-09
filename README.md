@@ -521,7 +521,12 @@ Now that you have a basic functional weather project, you may want to share with
 		# Procfile
 		web: gunicorn my_project.wsgi --log-file -
 		
-1. Let's [review your changes and commit your code](#process-for-committing-code) so the Procfile is available to Heroku. This new commit will be automatically deployed.
+1. Heroku defaults to Python 2.x, and we developed our app using Python 3, so we need to tell Heroku what version to use. You can do that by adding a runtime.txt file in the root of the project, with the following contents:
+
+		# runtime.txt
+		python-3.4.3
+		
+1. Let's [review your changes and commit your code](#process-for-committing-code) so the Procfile and runtime.txt are available to Heroku. This new commit will be automatically deployed.
 
 1. You can check deployment status on the command line:
 
@@ -537,6 +542,8 @@ Now that you have a basic functional weather project, you may want to share with
 # TODO
 
 - Take location input
+- static files
+- database
 - pyflakes
 - html validator
 - unit tests
