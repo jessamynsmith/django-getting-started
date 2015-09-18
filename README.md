@@ -96,7 +96,7 @@ the following:
 1. Verify the correct python3 is now on your path. On the command line, enter the following:
     $ which python3  # Should be "/usr/local/bin/python3"
 
-1. Pip in the standard package manager for Python. Packages provide useful functionality that is not available in Python itself. Ensure that you have the latest pip version installed:
+1. Pip is the standard package manager for Python. Packages provide useful functionality that is not available in Python itself. Ensure that you have the latest pip version installed:
     $ pip install -U pip
 
 1. Install virtualenv and virtualenvwrapper for python3. The virtualenv package allows you to have individual
@@ -279,6 +279,20 @@ In Django, an app is a cohesive collection of functionality inside a project. An
 		
 		urlpatterns = [
 		]
+
+1. Edit my_project/urls.py and include the urls for your new app. Once you are done, urls.py should look like this:
+
+		# urls.py
+		from django.conf.urls import include, url
+		from django.contrib import admin
+		
+		from app1 import urls as app1_urls  # Import for app1 urls
+		
+		
+		urlpatterns = [
+				url(r'^admin/', include(admin.site.urls)),
+				url(r'^app1/', include(app1_urls), name='app1'),
+		]
 		
 1. Create a templates directory with app-specific subdirectory. Inside the app1 directory, create a new directory named templates, and within that directory, create a directory named app1. It may seem strange to have app1 with the app1/templates directory, but it is important so that templates from different apps do not conflict with each other. Your directory structure should now look like the following:
 
@@ -294,22 +308,6 @@ In Django, an app is a cohesive collection of functionality inside a project. An
 		    my_project/
 		        settings.py
 		        ...
-
-1. Edit my_project/urls.py and include the urls for your new app. Also, add a redirect so that anyone going to the base URL for your project will be redirected to app1. Once you are done, urls.py should look like this:
-
-		# urls.py
-		from django.conf.urls import include, url
-		from django.contrib import admin
-		from django.views.generic import RedirectView
-		
-		from app1 import urls as app1_urls  # Import for app1 urls
-		
-		
-		urlpatterns = [
-				url(r'^admin/', include(admin.site.urls)),
-				url(r'^$', RedirectView.as_view(url='app1', permanent=True)), # Redirect base URL to app1
-				url(r'^app1/', include(app1_urls), name='app1'),
-		]
 		
 1. On the command line, run your Django app:
 
@@ -318,6 +316,8 @@ In Django, an app is a cohesive collection of functionality inside a project. An
 1. In a browser, open [http://127.0.0.1:8000](http://127.0.0.1:8000). This should redirect you to [http://127.0.0.1:8000/app1](http://127.0.0.1:8000/app1), which then displays the standard Django 404 page. Not to worry! This is because we've set up an automatic redirect from the root to app1, but the urls.py file for app1 doesn't have any routes in urlpatterns yet. Whenever you get this error, you can check the address in the url bar in the browser and make sure it matches a pattern in urls.py.
 		
 ### Creating a new view
+
+TODO index.html at top level, all inherit from that, call this something else
 
 You will need to follow these instructions for every new view you create. Apps typically have multiple views.
 
@@ -358,7 +358,7 @@ You will need to follow these instructions for every new view you create. Apps t
 		
 1. It's going to get tedious appending the /app1 to your url every time, so let's add a redirect. This means that anyone going to the base URL for your project will be redirected to app1. You would typically only do this once per project, so that the first time someone goes to your domain, they are taken to the appropriate landing page. Once you are done, urls.py should look like this:
 
-		# urls.py
+		# my_project/urls.py
 		from django.conf.urls import include, url
 		from django.contrib import admin
 		from django.views.generic import RedirectView
