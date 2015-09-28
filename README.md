@@ -487,6 +487,10 @@ Now that you have a basic functional weather project, you may want to share with
 
 1. Sign up for a free [Heroku](https://signup.heroku.com/login) account, if you don't already have one. You only need to do this once.
 
+1. Set up your [SSH key](https://devcenter.heroku.com/articles/keys) on Heroku.
+
+1. Get Heroku CLI by installing the [Heroku toolbelt](https://toolbelt.heroku.com/).
+
 ### Create Heroku App
 1. In Heroku, navigate to Account -> Dashboard.
 1. Click the '+' in the upper right to create a new app for your project.
@@ -543,11 +547,24 @@ Now that you have a basic functional weather project, you may want to share with
 1. Refresh the browser window where you were viewing your heroku app. You should now see your app up and running with weather data!
 
 
+###
+
+Database
+- export local database url in virtualenv
+- in heroku settings, make debug, django secret key env var
+- set heroku settings (from heroku page + change debug)
+DATABASES = {
+    'default': dj_database_url.config()
+}
+heroku run python manage.py migrate
+
+
 # TODO
 
-- Take location input
 - static files
 - database
+
+- Take location input
 - pyflakes
 - html validator
 - unit tests
