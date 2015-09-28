@@ -246,7 +246,7 @@ Commit as often as you can, but only commit working code. Every time you have ad
 
 Now comes the fun part: making your Django app do something interesting!
 
-### Starting a new work session
+### Starting a New Work Session
 
 1. Ensure you are set up to start working. You will want to do this each time you start a working. On the command line, do the following:
 
@@ -317,7 +317,7 @@ In Django, an app is a cohesive collection of functionality inside a project. An
 
 1. In a browser, try navigating to [http://127.0.0.1:8000/app1](http://127.0.0.1:8000/app1). You've added app1 urls to the project urls.py file, but you still get a 404! This is because the urls.py file for app1 doesn't have any routes in urlpatterns yet. Whenever you get this error, you can look at the list of possible URLs provided by Django, and compare with the address in the url bar to see where the mismatch is.
 		
-### Creating a new view
+### Creating a New View
 
 TODO: index.html at top level, all inherit from that, call this something else
 
@@ -380,7 +380,7 @@ You will need to follow these instructions for every new view you create. Apps t
 
 1. [Verify and commit your code](#process-for-committing-code).
 		
-### Creating a new library
+### Creating a New Library
 
 External libraries can be installed in your virtualenv using pip, but you may also want to create libraries within your application. A library is a related set of functions, e.g. for accessing an external API like Amazon S3. This code isn't necessarily related to any specific Django app, but it is needed for your project.
 
