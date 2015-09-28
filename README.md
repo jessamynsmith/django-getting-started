@@ -319,7 +319,7 @@ In Django, an app is a cohesive collection of functionality inside a project. An
 		
 ### Creating a new view
 
-TODO index.html at top level, all inherit from that, call this something else
+TODO: index.html at top level, all inherit from that, call this something else
 
 You will need to follow these instructions for every new view you create. Apps typically have multiple views.
 
@@ -461,25 +461,125 @@ External libraries can be installed in your virtualenv using pip, but you may al
 		<!DOCTYPE html>
 		<html lang="en">
 		<head>
-		<title>Local Forecast</title>
+			<title>Weather Forecast</title>
 		</head>
 		<body>
-				<h3>Local Forecast</h3>
+		<h3>Weather Forecast</h3>
 		
-				<div>Location: {{ forecast.city.name }} ({{forecast.city.coord.lat}}, {{forecast.city.coord.lon}})</div>
-				<br>
+		<div>
+			{% if forecast %}
+		
+				<div>Weather for: {{ forecast.city.name }}
+					({{ forecast.city.coord.lat }}, {{ forecast.city.coord.lon }})
+				</div>
 				<hr>
 		
 				{% for item in forecast.list %}
-						<div>Date: {{ item.dt_txt }}</div>
-						<div>Description: {{ item.weather.0.main }}</div>
-						<div>Temperature (K): {{ item.main.temp }}</div>
-						<hr>
+					<div>Date: {{ item.dt_txt }}</div>
+					<div>Description: {{ item.weather.0.main }}</div>
+					<div>Temperature (K): {{ item.main.temp }}</div>
+					<hr>
 				{% endfor %}
+			{% else %}
+				No weather information found. :(
+			{% endif %}
+		</div>
+		
 		</body>
 		</html>
 
 1. Congratulations, you just retrieved data from an external API and displayed it within a Django site! Probably a good time to [review your changes and commit your code](#process-for-committing-code). :)
+
+
+### Handling User Input With Django Forms
+
+Django comes with forms that make it easy to take user input and perform actions based on that input. There are even default forms to handle model objects and save the data to the database.
+
+1. Inside your app directory, create a file called forms.py to contain your form code. You only need to create the file once per app. This should result in the following directory contents for app1:
+
+		my_project/
+		    app1/
+		    		...
+		        admin.py
+		        forms.py
+		        ...
+		
+1. Open app1/forms.py, and define a form to handle the user's location input.
+
+		# app1/forms.py
+		from django import forms
+		
+		
+		class LocationForm(forms.Form):
+				city = forms.CharField(label='City', max_length=50)
+				country = forms.CharField(label='Country', max_length=2)
+		
+1. Now that we have created a form, we can use that form in the view to handle user input. Generally, you first check whether this is the initial page load request, or a request generatd by submitting the form. If the latter, check if form input is valid and take action accordingly. You will need to put the form into the context so it is available to the template. Once all of these steps are completed, your views.py should look like the following:
+
+		# app1/views.py
+		from django.shortcuts import render
+		
+		from libs.open_weather_map import OpenWeatherMap
+		from app1 import forms as app1_forms
+		
+		
+		def index(request):
+				context = {}
+				# If request has GET parameters, this means it was created when the user clicked the submit
+				# submit button on the form
+				if request.GET:
+						# Create a bound form based on the GET parameters to the request
+						form = app1_forms.LocationForm(request.GET)
+						if form.is_valid():
+								# If the form parameters are valid, search for weather based on the form data
+								# If the form parameters are invalid, the page will be loaded showing the errors
+								open_weather_map = OpenWeatherMap()
+								context['forecast'] = open_weather_map.get_forecast(
+										city=form.cleaned_data['city'], country=form.cleaned_data['country'])
+				else:
+						# This is an initial page load, so create an unbound form
+						form = app1_forms.LocationForm()
+				# Add the form to the page context so it is available to the template
+				context['form'] = form
+				return render(request, 'app1/index.html', context)
+				
+1. Note that in the above changes to the view, we passed city and country to our OpenWeatherMap.get_forecast call. You may recall that previously, get_forecast did not take any parameters. We need to add the parameters, and modify our call to the API to use those parameters. The [API documentation](http://openweathermap.org/forecast5#JSON) indicates that we can pass "q=city,country_code" to retrieve data based on city and country.
+
+		# lib/open_weather_map.py
+		...
+		def get_forecast(self, city='', country=''):
+        # Append the "forecast" path to the base API URL
+        url = '%sforecast' % self.api_url
+
+        # URL parameters
+        params = {}
+        if city and country:
+            params['q'] = '%s,%s' % (city, country)
+        else:
+            params['lat'] = -33.8650
+            params['lon'] = 151.2094
+    ...
+				
+1. Now we can add the form to the html template. You can add the form above the weather data, and also update the error message when no weather data is available to indicate to the user they should enter a valid location.
+
+		# app1/templates/app1/index.html
+		...
+		<h3>Weather Forecast</h3>
+		
+		<form>
+			{{ form }}
+			<input type="submit" value="Find Weather">
+		</form>
+
+		<div>
+  	{% if forecast %}
+  	...
+		{% else %}
+			<h4>Enter a valid location to see weather info!</h4>
+		{% endif %}
+		...
+
+1. This would be a good time to [review your changes and commit your code](#process-for-committing-code). Try a variety of locations to see that weather is retrieved.
 
 ## Deploy Django App to Heroku
 
