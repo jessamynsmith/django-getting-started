@@ -204,6 +204,10 @@ Commit as often as you can, but only commit working code. Every time you have ad
 		
 1. In a browser, open [http://127.0.0.1:8000](http://127.0.0.1:8000) where you should see "It worked!"
 
+1. Run your tests, if you have any.
+
+		$ python manage.py test
+
 1. Check that the list of changed files is as expected:
 
 		$ git status -u
@@ -236,6 +240,7 @@ Commit as often as you can, but only commit working code. Every time you have ad
 1. Summary of essential commit process:
 
 		$ python manage.py runserver  # And check in browser [http://127.0.0.1:8000](http://127.0.0.1:8000)
+		$ python manage.py test
 		$ git status -u  # Check what files have been modified
 		$ git diff  # Look over your changes (always a good idea to ensure it is as expected)
 		$ git add -A  # Add all modified files to staging
@@ -492,6 +497,77 @@ External libraries can be installed in your virtualenv using pip, but you may al
 
 1. Congratulations, you just retrieved data from an external API and displayed it within a Django site! Probably a good time to [review your changes and commit your code](#process-for-committing-code). :)
 
+### Adding Unit Tests to Your Library
+
+Unit tests are great tool to verify that your code works as expected. It is a good idea to add unit tests to all code that you write, and run your unit tests with coverage to ensure you are testing all of the paths through your code.
+
+1. First, let's install the necessary packages, and add them to requirements.txt. The mock library allows you to mock out elements (e.g. so your tests don't depend on the network) and coverage lets you see how much of your code is covered by tests. As always, ensure that you are in the project root directory and the virtualenv is active before you install.
+
+		$ workon my_project
+		$ pip install coverage mock
+		$ pip freeze > requirements.txt
+		
+1. Next, let's create a directory for our tests. It's a good idea to keep tests inside the library or app they belong to, to make it easier to reuse the code. Inside the "libs/open_weather_map" directory, create a "tests" directory.
+
+1. Inside your new "libs/open_weather_map/tests" directory, create a file for your tests. By convention, the file is called test_<name_of_file_being_tested>.py, so in this case, test_wrapper.py
+
+1. Open your new test_wrapper.py file and create your first tests. Every test should have at least a call to the code being tested and some asserts on the results of that call. Many tests will also have setup before the call. The more conditions you assert on, the more confidence you can have that the code is running correctly. In general, when thinking of cases to test, you can think about the possible error case(s) and the possible success case(s). You can also consider if zero, one, and many are relevant to your test cases, and test any boundary conditions on the inputs. In this case, since we are testing the handling of responses from an API, the error/success model applies.
+
+		# libs/open_weather_map/tests/test_wrapper.py
+		from django.test import TestCase
+		from mock import patch
+		import requests 
+		
+		
+		from libs.open_weather_map.wrapper import OpenWeatherMap
+		
+		
+		class OpenWeatherMapTestCase(TestCase):
+				def setUp(self):
+						# Create a reference to the class being tested
+						self.open_weather_map = OpenWeatherMap()
+		
+				# Patch out requests.get to avoid making a call to the actual API
+				@patch("requests.get")    
+				def test_failure(self, mock_get):
+						# Set up a response with a failure error code to test error handling
+						response = requests.Response()
+						response.status_code = requests.codes.bad_request
+						# Set the mock to return the failure response
+						mock_get.return_value = response
+		
+						forecast = self.open_weather_map.get_forecast()
+		
+						# Ensure that if an error occurs, we get back an empty object and no exceptions are thrown
+						self.assertEqual({}, forecast)
+		
+				# Patch out requests.get to avoid making a call to the actual API
+				@patch("requests.get")    
+				def test_success(self, mock_get):
+						# Set up a response with a successful error code and some data to test the success case
+						response = requests.Response()
+						response.status_code = requests.codes.ok 
+						response._content = b'{"city": {"name": "Sydney"}}'
+						# Set the mock to return the success response
+						mock_get.return_value = response
+		
+						forecast = self.open_weather_map.get_forecast()
+		
+						# Ensure that the data we set in the response body has been parsed correctly
+						self.assertEqual("Sydney", forecast['city']['name'])
+						
+1. Try running your tests using the built-in django test runner:
+
+		$ python manage.py test
+		
+1. Generate and view the coverage report:
+
+		$ coverage run --source=. manage.py test
+    $ coverage report
+    
+1. Once your tests run successfully, [review your changes and commit your code](#process-for-committing-code).
+
+TODO: continuous integration, build conditional on tests passing.
 
 ### Handling User Input With Django Forms
 
