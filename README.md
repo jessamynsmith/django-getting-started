@@ -386,7 +386,9 @@ External libraries can be installed in your virtualenv using pip, but you may al
 
 1. Create a directory for your libraries, called "libs" in the root of your project, next to app1 and my_project. You only need to do this once per project.
 
-1. Inside the "libs" directory, create a new python file for the library you want to create. You need to do this once for every library you add. In this case, we will be creating a library to access the [Open Weather Map API](http://openweathermap.org/api), so we will call the file open_weather_map.py
+1. Inside the "libs" directory, create a new directory for the library you want to create. You need to do this once for every library you add. In this case, we will be creating a library to access the [Open Weather Map API](http://openweathermap.org/api), so we will call the library open_weather_map.
+
+1. Inside the "libs/open_weather_map" directory, create a new python file for the library. As this library wraps the open weather map API, you can call the file wrapper.py
 
 1. The [requests](http://www.python-requests.org/en/latest/) library is the easiest way to make API calls from Python, so install requests and add it to the project requirements. Ensure that you are in the project root directory and the virtualenv is active first!
 
@@ -394,9 +396,9 @@ External libraries can be installed in your virtualenv using pip, but you may al
 		$ pip install requests
 		$ pip freeze > requirements.txt
 		
-1. Open libs/open_weather_map.py, and make a class for accessing the Open Weather Map API. In general, when accessing an external API, it's a good idea to make a class that has at least the base API URL as a member.
+1. Open libs/open_weather_map/wrapper.py, and make a class for accessing the Open Weather Map API. In general, when accessing an external API, it's a good idea to make a class that has at least the base API URL as a member.
 
-		# libs/open_weather_map.py
+		# libs/open_weather_map/wrapper.py
 		import requests
 		
 		
@@ -408,7 +410,7 @@ External libraries can be installed in your virtualenv using pip, but you may al
 						
 1. Now that we have an Open Weather Map class, let's use it to get some data! There are many options on the API we've chosen; for now, let's do the [5 day/3 hour forecast](http://openweathermap.org/forecast5). This will be a GET request, since we are retrieving (not modifying) data on the server. The documentation indicates that we must pass in some form of location information to indicate which forecast we want. The requests library makes it easy:
 
-		# libs/open_weather_map.py
+		# libs/open_weather_map/wrapper.py
 		import requests
 		
 		
@@ -444,7 +446,7 @@ External libraries can be installed in your virtualenv using pip, but you may al
 		# app1/views.py
 		from django.shortcuts import render
 		
-		from libs.open_weather_map import OpenWeatherMap
+		from libs.open_weather_map.wrapper import OpenWeatherMap
 		
 		
 		def index(request):
@@ -519,7 +521,7 @@ Django comes with forms that make it easy to take user input and perform actions
 		# app1/views.py
 		from django.shortcuts import render
 		
-		from libs.open_weather_map import OpenWeatherMap
+		from libs.open_weather_map.wrapper import OpenWeatherMap
 		from app1 import forms as app1_forms
 		
 		
@@ -545,7 +547,7 @@ Django comes with forms that make it easy to take user input and perform actions
 				
 1. Note that in the above changes to the view, we passed city and country to our OpenWeatherMap.get_forecast call. You may recall that previously, get_forecast did not take any parameters. We need to add the parameters, and modify our call to the API to use those parameters. The [API documentation](http://openweathermap.org/forecast5#JSON) indicates that we can pass "q=city,country_code" to retrieve data based on city and country.
 
-		# lib/open_weather_map.py
+		# lib/open_weather_map/wrapper.py
 		...
 		def get_forecast(self, city='', country=''):
         # Append the "forecast" path to the base API URL
