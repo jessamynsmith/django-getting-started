@@ -91,12 +91,15 @@ options are [Sublime text](http://www.sublimetext.com/2), [textmate](https://mac
 1. Install python 3 using homebrew. This is the latest version of python, and while much existing
 code is still written in python 2, for new projects it is best to use python 3. On the command line, enter
 the following:
+
     $ brew install python3
 
 1. Verify the correct python3 is now on your path. On the command line, enter the following:
+    
     $ which python3  # Should be "/usr/local/bin/python3"
 
 1. Pip is the standard package manager for Python. Packages provide useful functionality that is not available in Python itself. Ensure that you have the latest pip version installed:
+    
     $ pip install -U pip
 
 1. Install virtualenv and virtualenvwrapper for python3. The virtualenv package allows you to have individual
@@ -104,10 +107,12 @@ environments for every python project, separate from the system package installs
 virtualenvwrapper package is a utility to manage your virtualenvs. It keeps the virtualenvs separate
 from your code and also provides useful operations on virtualenvs.
 (To be investigated: Do virtualenv and virtualenvwrapper have to be installed globally?)
+    
     $ sudo pip install virtualenv virtualenvwrapper
 
 1. Add virtualenvwrapper configuration to your .bashrc file. You can do this by
 editing your .bashrc file. On the command line, enter the following:
+    
     $ cd ~
 
     $ open .bashrc  # Could also use vim or emacs
@@ -512,6 +517,8 @@ Unit tests are great tool to verify that your code works as expected. It is a go
 1. Inside your new "libs/open_weather_map/tests" directory, create a file for your tests. By convention, the file is called test_<name_of_file_being_tested>.py, so in this case, test_wrapper.py
 
 1. Open your new test_wrapper.py file and create your first tests. Every test should have at least a call to the code being tested and some asserts on the results of that call. Many tests will also have setup before the call. The more conditions you assert on, the more confidence you can have that the code is running correctly. In general, when thinking of cases to test, you can think about the possible error case(s) and the possible success case(s). You can also consider if zero, one, and many are relevant to your test cases, and test any boundary conditions on the inputs. In this case, since we are testing the handling of responses from an API, the error/success model applies.
+
+TODO add api key
 
 		# libs/open_weather_map/tests/test_wrapper.py
 		from django.test import TestCase
