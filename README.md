@@ -201,6 +201,10 @@ deploying a Django project to Heroku. On the command line:
 
 ### Process for Committing Code
 
+
+TODO generalize steps
+pycharm version
+
 Commit as often as you can, but only commit working code. Every time you have added some piece of functionality and your project runs successfully, it's a good idea to commit. Outlined here is a good process to follow every time you commit code.
 
 1. On the command line, run your Django app:
@@ -716,7 +720,7 @@ Now that you have a basic functional weather project, you may want to share with
 		
 1. Heroku defaults to Python 2.x, and we developed our app using Python 3, so we need to tell Heroku what version to use. You can do that by adding a runtime.txt file in the root of the project, with the following contents:
 
-		# runtime.txt
+		$ cat runtime.txt
 		python-3.4.3
 		
 1. Let's [review your changes and commit your code](#process-for-committing-code) so the Procfile and runtime.txt are available to Heroku. This new commit will be automatically deployed.
