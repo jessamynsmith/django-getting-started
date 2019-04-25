@@ -253,7 +253,7 @@ Commit as often as you can, but only commit working code. Every time you have ad
 		$ git status -u  # Check what files have been modified
 		$ git diff  # Look over your changes (always a good idea to ensure it is as expected)
 		$ git add -A  # Add all modified files to staging
-		$ git status  # Verify that modified files list all files that should be committed, and ONLY files that should be committed
+		$ git status  # Verify that list contains all files that should be committed, and ONLY files that should be committed
 		$ git commit -m "Added first view"  # Commit staged files
 		$ git push origin master  # Push commit to github
 
