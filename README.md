@@ -246,13 +246,14 @@ Commit as often as you can, but only commit working code. Every time you have ad
 
 1. You can go to your GitHub project in the browser and you should see your changes.
 
-1. Summary of essential commit process:
+### Summary of essential commit process:
 
 		$ python manage.py runserver  # And check in browser [http://127.0.0.1:8000](http://127.0.0.1:8000)
 		$ python manage.py test
 		$ git status -u  # Check what files have been modified
 		$ git diff  # Look over your changes (always a good idea to ensure it is as expected)
 		$ git add -A  # Add all modified files to staging
+		$ git status  # Verify that modified files list all files that should be committed, and ONLY files that should be committed
 		$ git commit -m "Added first view"  # Commit staged files
 		$ git push origin master  # Push commit to github
 
