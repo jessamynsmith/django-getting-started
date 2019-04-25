@@ -248,6 +248,7 @@ Commit as often as you can, but only commit working code. Every time you have ad
 
 ### Summary of essential commit process:
 
+		$ # First, verify that your app is running correctly:
 		$ python manage.py runserver  # And check in browser [http://127.0.0.1:8000](http://127.0.0.1:8000)
 		$ python manage.py test
 		$ git status -u  # Check what files have been modified
