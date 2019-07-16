@@ -165,37 +165,37 @@ deploying a Django project to Heroku. On the command line:
 
     $ pip freeze
     
-		dj-database-url==0.3.0
-		dj-static==0.0.6
-		Django==1.8.4
-		django-toolbelt==0.0.1
-		gunicorn==19.3.0
-		psycopg2==2.6.1
-		static3==0.6.1
-		wheel==0.24.0
+    dj-database-url==0.3.0
+    dj-static==0.0.6
+    Django==1.8.4
+    django-toolbelt==0.0.1
+    gunicorn==19.3.0
+    psycopg2==2.6.1
+    static3==0.6.1
+    wheel==0.24.0
 
 1. Explanation of installed packages:
 
-		dj-database-url - Required by Heroku to access the postgres database addon
-		dj-static - Wrapper around static3 to allow Heroku to serve static files (e.g. CSS, JavaScript)
-		Django - The main Django package
-		django-toolbelt - The top-level package we installed to get all these packages
-		gunicorn - Webserver recommended by Heroku for serving Django apps (similar to 'manage.py runserver', which is used for testing)
-		psycopg2 - Python package for accessing postgres databases
-		static3 - Python 3 version of static, which allows your static files to be served by WSGI
-		wheel - Used by pip, installed by default
+    dj-database-url - Required by Heroku to access the postgres database addon
+    dj-static - Wrapper around static3 to allow Heroku to serve static files (e.g. CSS, JavaScript)
+    Django - The main Django package
+    django-toolbelt - The top-level package we installed to get all these packages
+    gunicorn - Webserver recommended by Heroku for serving Django apps (similar to 'manage.py runserver', which is used for testing)
+    psycopg2 - Python package for accessing postgres databases
+    static3 - Python 3 version of static, which allows your static files to be served by WSGI
+    wheel - Used by pip, installed by default
 
 1. The standard way of tracking package requirements for a Django project is a requirements.txt file. Whenever a fresh checkout of this project is made, all necessary dependencies can be installed by typing `pip install -r requirements.txt` on the command line. This is how Heroku will install your project dependencies. Use pip freeze to add the installed packages to requirements.txt
 
-		$ pip freeze > requirements.txt
+    $ pip freeze > requirements.txt
 
 1. Create a new Django project in the top-level git project directory:
 
-		$ django-admin startproject my_project . # Note the trailing '.' which means 'current directory'
+    $ django-admin startproject my_project . # Note the trailing '.' which means 'current directory'
 
 1. Edit your .gitignore file to include an entry for .sql files. By default, Django will use sqlite3 (a basic database that is bundled with Python) and you don't want to commit your database file to your repository! Open .gitignore and add the following at the end of the file:
 
-		*.sql*
+    *.sql*
 
 1. This is a good time to verify that your project runs (always a good idea before committing code!) and if it does, commit the changes.
 
@@ -209,54 +209,58 @@ Commit as often as you can, but only commit working code. Every time you have ad
 
 1. On the command line, run your Django app:
 
-		$ python manage.py runserver
-		
+    $ python manage.py runserver
+    
+Note any warnings you see when you run your server, and fix them if you can. For example, it may warn you that you have unapplied migrations. In that case, you need to stop the server, migrate, and then run the server again. You can migrate with:
+
+        $ python manage.py migrate
+    
 1. In a browser, open [http://127.0.0.1:8000](http://127.0.0.1:8000) where you should see "It worked!"
 
 1. Run your tests, if you have any.
 
-		$ python manage.py test
+    $ python manage.py test
 
 1. Check that the list of changed files is as expected:
 
-		$ git status -u
-		On branch master
-		Your branch is up-to-date with 'origin/master'.
-		Untracked files:
-			(use "git add <file>..." to include in what will be committed)
-		
-			manage.py
-			my_project/__init__.py
-			my_project/settings.py
-			my_project/urls.py
-			my_project/wsgi.py
-			requirements.txt
-		
-		nothing added to commit but untracked files present (use "git add" to track)
-		
+    $ git status -u
+    On branch master
+    Your branch is up-to-date with 'origin/master'.
+    Untracked files:
+    	(use "git add <file>..." to include in what will be committed)
+    
+    	manage.py
+    	my_project/__init__.py
+    	my_project/settings.py
+    	my_project/urls.py
+    	my_project/wsgi.py
+    	requirements.txt
+    
+    nothing added to commit but untracked files present (use "git add" to track)
+    
 1. Check your diff to see what is in it and make sure it all makes sense:
 
-		$ git diff
+    $ git diff
 
 1. Commit and push your changes.
 
-		$ git add -A  # Add all modified files to staging
-		$ git commit -m "Initialized Django project"  # Commit staged files
-		$ git push origin master  # Push commit to github
+    $ git add -A  # Add all modified files to staging
+    $ git commit -m "Initialized Django project"  # Commit staged files
+    $ git push origin master  # Push commit to github
 
 1. You can go to your GitHub project in the browser and you should see your changes.
 
 ### Summary of essential commit process:
 
-		$ # First, verify that your app is running correctly:
-		$ python manage.py runserver  # And check in browser [http://127.0.0.1:8000](http://127.0.0.1:8000)
-		$ python manage.py test
-		$ git status -u  # Check what files have been modified
-		$ git diff  # Look over your changes (always a good idea to ensure it is as expected)
-		$ git add -A  # Add all modified files to staging
-		$ git status  # Verify that list contains all files that should be committed, and ONLY files that should be committed
-		$ git commit -m "Added first view"  # Commit staged files
-		$ git push origin master  # Push commit to github
+    $ # First, verify that your app is running correctly:
+    $ python manage.py runserver  # And check in browser [http://127.0.0.1:8000](http://127.0.0.1:8000)
+    $ python manage.py test
+    $ git status -u  # Check what files have been modified
+    $ git diff  # Look over your changes (always a good idea to ensure it is as expected)
+    $ git add -A  # Add all modified files to staging
+    $ git status  # Verify that list contains all files that should be committed, and ONLY files that should be committed
+    $ git commit -m "Added first view"  # Commit staged files
+    $ git push origin master  # Push commit to github
 
 ## Add Functionality to Django App
 
@@ -264,10 +268,10 @@ Now comes the fun part: making your Django app do something interesting!
 
 ### Starting a New Work Session
 
-1. Ensure you are set up to start working. You will want to do this each time you start a working. On the command line, do the following:
+1. Ensure you are set up to start working. You will want to do this each time you start working on your project. Ensure you are in the project directory for your project (the one with manage.py) and that your virtualenv is active. For example, if you are set up as described above, you would do:
 
-		$ cd ~/Development/my_project
-		$ workon my_project
+    $ cd ~/Development/my_project  # Go to the project directory
+    $ workon my_project  # Activate the virtual environment
 
 ### Creating a New App
 
@@ -275,64 +279,64 @@ In Django, an app is a cohesive collection of functionality inside a project. An
 
 1. To create an app:
 
-		$ python manage.py startapp app1
-		
+    $ python manage.py startapp app1
+    
 1. You will need to add your new app to my_project/settings.py. This lets Django know about your app, e.g. for creating/running migrations.
 
-		# settings.py
-		INSTALLED_APPS = (
-				...
-    		'app1',
-		)
+    # settings.py
+    INSTALLED_APPS = (
+        ...
+        'app1',
+    )
 
-1. Create a urls.py file for your new app. Inside the app1 directory, create urls.py and enter the following:		
-		
-		# app1/urls.py
-		from django.conf.urls import url
-		
-		from . import views  # Import the views for this app
-		
-		
-		urlpatterns = [
-		]
+1. Create a urls.py file for your new app. Inside the app1 directory, create urls.py and enter the following:
+   
+   # app1/urls.py
+   from django.urls import url
+   
+   from . import views  # Import the views for this app
+   
+   
+   urlpatterns = [
+   ]
 
 1. Edit my_project/urls.py and include the urls for your new app. Once you are done, urls.py should look like this:
 
-		# urls.py
-		from django.conf.urls import include, path
-		from django.contrib import admin
-		
-		from app1 import urls as app1_urls  # Import for app1 urls
-		
-		
-		urlpatterns = [
-				path('admin/', include(admin.site.urls)),
-				path('app1/', include(app1_urls), name='app1'),
-		]
-		
+   # urls.py
+   from django.urls import include, path
+   from django.contrib import admin
+   
+   from app1 import urls as app1_urls  # Import for app1 urls
+   
+   
+   urlpatterns = [
+      path('admin/', include(admin.site.urls)),
+      path('app1/', include(app1_urls), name='app1'),
+   ]
+   
 1. Create a templates directory with app-specific subdirectory. Inside the app1 directory, create a new directory named templates, and within that directory, create a directory named app1. It may seem strange to have app1 with the app1/templates directory, but it is important so that templates from different apps do not conflict with each other. Your directory structure should now look like the following:
 
-		my_project/
-		    app1/
-		        migrations/
-		        templates/
-		            app1/
-		        admin.py
-		        ....
-		        urls.py
-		        views.py
-		    my_project/
-		        settings.py
-		        ...
-		
+   my_project/
+       app1/
+           migrations/
+           templates/
+               app1/
+           admin.py
+           ....
+           urls.py
+           views.py
+       my_project/
+           settings.py
+           ...
+   
 1. On the command line, run your Django app:
 
-		$ python manage.py runserver
-		
+   $ python manage.py runserver
+   
 1. In a browser, open [http://127.0.0.1:8000](http://127.0.0.1:8000). This should display the standard Django 404 page. Not to worry! This is because we have not yet mapped the base URL for the project to a route yet.
 
 1. In a browser, try navigating to [http://127.0.0.1:8000/app1](http://127.0.0.1:8000/app1). You've added app1 urls to the project urls.py file, but you still get a 404! This is because the urls.py file for app1 doesn't have any routes in urlpatterns yet. Whenever you get this error, you can look at the list of possible URLs provided by Django, and compare with the address in the url bar to see where the mismatch is.
-		
+   
 ### Creating a New View
 
 TODO: index.html at top level, all inherit from that, call this something else
@@ -341,61 +345,61 @@ You will need to follow these instructions for every new view you create. Apps t
 
 1. Create a template for your new view, called index.html, inside the app1/templates/app1 directory. Django templates can do variable substitution, looping, and all sorts of other useful operations, but for now, we will make a very simple "Hello World" template containing plain HTML. Edit index.html to contain the following:
 
-		# app1/templates/app1/index.html
-		<!DOCTYPE html>
-		<html lang="en">
-		<head>
-		</head>
-		<body>
-			<h3>Hello World!</h3>
-			<p>I just made the index page for my first Django app. :-)</p>
-		</body>
-		</html>
+   # app1/templates/app1/index.html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+   </head>
+   <body>
+   	<h3>Hello World!</h3>
+   	<p>I just made the index page for my first Django app. :-)</p>
+   </body>
+   </html>
 
 1. Create the view code for the "Hello World" view. This is an extremely simple view that takes a request and renders the app1/index.html template. (Note that we do not need to say prepend "templates" to the path -- Django knows to look at templates.) Edit app1/views.py to contain the following:
 
-		# app1/views.py
-		from django.shortcuts import render
-		
-		
-		def index(request):
-				context = {}  # So far, we are not specifying any custom context
-				return render(request, 'app1/index.html', context)
+   # app1/views.py
+   from django.shortcuts import render
+   
+   
+   def index(request):
+      context = {}  # So far, we are not specifying any custom context
+      return render(request, 'app1/index.html', context)
 
 1. Add your new view to the app urls. Edit app1/urls.py to add a url for your new view. Once you are done, the file should look like the following
 
-		# app1/urls.py
-		from django.conf.urls import path
-		
-		from . import views  # Import the views for this app
-		
-		
-		urlpatterns = [
-				path('', views.index, name='index'),  # Url for index view
-		]
-		
+   # app1/urls.py
+   from django.urls import path
+   
+   from . import views  # Import the views for this app
+   
+   
+   urlpatterns = [
+      path('', views.index, name='index'),  # Url for index view
+   ]
+   
 1. Verify that your new view is available by navigating to the new app in the browser: [http://127.0.0.1:8000/app1/](http://127.0.0.1:8000/app1/) Note that you need the /app1 to go directly to app1, because the top-level urls.py links app1 urls to the /app1 path.
-		
+   
 1. It's going to get tedious appending the /app1 to your url every time, so let's add a redirect. This means that anyone going to the base URL for your project will be redirected to app1. You would typically only do this once per project, so that the first time someone goes to your domain, they are taken to the appropriate landing page. Once you are done, urls.py should look like this:
 
-		# my_project/urls.py
-		from django.conf.urls import include, path
-		from django.contrib import admin
-		from django.views.generic import RedirectView
-		
-		from app1 import urls as app1_urls  # Import for app1 urls
-		
-		
-		urlpatterns = [
-				path('admin/', include(admin.site.urls)),
-				path('', RedirectView.as_view(url='app1', permanent=True)), # Redirect base URL to app1
-				path('app1/', include(app1_urls), name='app1'),
-		]
-		
+   # my_project/urls.py
+   from django.urls import include, path
+   from django.contrib import admin
+   from django.views.generic import RedirectView
+   
+   from app1 import urls as app1_urls  # Import for app1 urls
+   
+   
+   urlpatterns = [
+      path('admin/', include(admin.site.urls)),
+      path('', RedirectView.as_view(url='app1', permanent=True)), # Redirect base URL to app1
+      path('app1/', include(app1_urls), name='app1'),
+   ]
+   
 1. Because we added a redirect, if you go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) you should be redirected to /app1. Verify that this is the case.
 
 1. [Verify and commit your code](#process-for-committing-code).
-		
+   
 ### Creating a New Library
 
 External libraries can be installed in your virtualenv using pip, but you may also want to create libraries within your application. A library is a related set of functions, e.g. for accessing an external API like Amazon S3. This code isn't necessarily related to any specific Django app, but it is needed for your project.
@@ -408,103 +412,103 @@ External libraries can be installed in your virtualenv using pip, but you may al
 
 1. The [requests](http://www.python-requests.org/en/latest/) library is the easiest way to make API calls from Python, so install requests and add it to the project requirements. Ensure that you are in the project root directory and the virtualenv is active first!
 
-		$ workon my_project
-		$ pip install requests
-		$ pip freeze > requirements.txt
-		
+   $ workon my_project
+   $ pip install requests
+   $ pip freeze > requirements.txt
+   
 1. Open libs/open_weather_map/wrapper.py, and make a class for accessing the Open Weather Map API. In general, when accessing an external API, it's a good idea to make a class that has at least the base API URL as a member.
 
-		# libs/open_weather_map/wrapper.py
-		import requests
-		
-		
-		class OpenWeatherMap():
-		
-				def __init__(self):
-						# This is the base URL for the API and will be common to all requests
-						self.api_url = 'http://api.openweathermap.org/data/2.5/'
-						
+   # libs/open_weather_map/wrapper.py
+   import requests
+   
+   
+   class OpenWeatherMap():
+   
+      def __init__(self):
+         # This is the base URL for the API and will be common to all requests
+         self.api_url = 'http://api.openweathermap.org/data/2.5/'
+         
 1. Now that we have an Open Weather Map class, let's use it to get some data! There are many options on the API we've chosen; for now, let's do the [5 day/3 hour forecast](http://openweathermap.org/forecast5). This will be a GET request, since we are retrieving (not modifying) data on the server. The documentation indicates that we must pass in some form of location information to indicate which forecast we want. The requests library makes it easy:
 
-		# libs/open_weather_map/wrapper.py
-		import requests
-		
-		
-		class OpenWeatherMap(object):
-				
-				def __init__(self):
-						self.api_url = 'http://api.openweathermap.org/data/2.5/'
-		
-				def get_forecast(self):
-						# Append the "forecast" path to the base API URL
-						url = '%sforecast' % self.api_url
-		
-						# URL parameters
-						params = {
-								'lat': -33.8650,
-								'lon': 151.2094
-						}
-		
-						# Do a get request on the forecast url, with the lat/lon params
-						response = requests.get(url, params=params)
-		
-						# It's always a good idea to initialize results to empty, and update if data received
-						results = {}
-						# If the request was successful
-						if response.status_code == requests.codes.ok:
-								# Get the response body in JSON format
-								results = response.json()
-		
-						return results
+   # libs/open_weather_map/wrapper.py
+   import requests
+   
+   
+   class OpenWeatherMap(object):
+      
+      def __init__(self):
+         self.api_url = 'http://api.openweathermap.org/data/2.5/'
+   
+      def get_forecast(self):
+         # Append the "forecast" path to the base API URL
+         url = '%sforecast' % self.api_url
+   
+         # URL parameters
+         params = {
+            'lat': -33.8650,
+            'lon': 151.2094
+         }
+   
+         # Do a get request on the forecast url, with the lat/lon params
+         response = requests.get(url, params=params)
+   
+         # It's always a good idea to initialize results to empty, and update if data received
+         results = {}
+         # If the request was successful
+         if response.status_code == requests.codes.ok:
+            # Get the response body in JSON format
+            results = response.json()
+   
+         return results
 
 1. In order to display the retrieved information on the index page, we need to first call the API from our view code. This means we must import our library, instantiate the class, call our forecast method, and put the resulting data into the view context so the template can access it. Your app1 view code should look something like this when you are done:
 
-		# app1/views.py
-		from django.shortcuts import render
-		
-		from libs.open_weather_map.wrapper import OpenWeatherMap
-		
-		
-		def index(request):
-				open_weather_map = OpenWeatherMap()
-		
-				context = {
-						'forecast': open_weather_map.get_forecast()
-				}
-				return render(request, 'app1/index.html', context)
-				
+   # app1/views.py
+   from django.shortcuts import render
+   
+   from libs.open_weather_map.wrapper import OpenWeatherMap
+   
+   
+   def index(request):
+      open_weather_map = OpenWeatherMap()
+   
+      context = {
+         'forecast': open_weather_map.get_forecast()
+      }
+      return render(request, 'app1/index.html', context)
+      
 1. At last, we can add the weather data to our page! You don't need the "Hello World" or "first Django app" placeholder text anymore, so you can delete that. You can check the [API documentation](http://openweathermap.org/forecast5#JSON) to see the format of the returned JSON data. We will use that format information to display data in our page. You can start to see the power of django templates, as we reference members of the forecast data structure and loop over the items in the forecast list.
 
-		# app1/templates/app1/index.html
-		<!DOCTYPE html>
-		<html lang="en">
-		<head>
-			<title>Weather Forecast</title>
-		</head>
-		<body>
-		<h3>Weather Forecast</h3>
-		
-		<div>
-			{% if forecast %}
-		
-				<div>Weather for: {{ forecast.city.name }}
-					({{ forecast.city.coord.lat }}, {{ forecast.city.coord.lon }})
-				</div>
-				<hr>
-		
-				{% for item in forecast.list %}
-					<div>Date: {{ item.dt_txt }}</div>
-					<div>Description: {{ item.weather.0.main }}</div>
-					<div>Temperature (K): {{ item.main.temp }}</div>
-					<hr>
-				{% endfor %}
-			{% else %}
-				No weather information found. :(
-			{% endif %}
-		</div>
-		
-		</body>
-		</html>
+   # app1/templates/app1/index.html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+   	<title>Weather Forecast</title>
+   </head>
+   <body>
+   <h3>Weather Forecast</h3>
+   
+   <div>
+   	{% if forecast %}
+   
+      <div>Weather for: {{ forecast.city.name }}
+      	({{ forecast.city.coord.lat }}, {{ forecast.city.coord.lon }})
+      </div>
+      <hr>
+   
+      {% for item in forecast.list %}
+      	<div>Date: {{ item.dt_txt }}</div>
+      	<div>Description: {{ item.weather.0.main }}</div>
+      	<div>Temperature (K): {{ item.main.temp }}</div>
+      	<hr>
+      {% endfor %}
+   	{% else %}
+      No weather information found. :(
+   	{% endif %}
+   </div>
+   
+   </body>
+   </html>
 
 1. Congratulations, you just retrieved data from an external API and displayed it within a Django site! Probably a good time to [review your changes and commit your code](#process-for-committing-code). :)
 
@@ -514,10 +518,10 @@ Unit tests are great tool to verify that your code works as expected. It is a go
 
 1. First, let's install the necessary packages, and add them to requirements.txt. The mock library allows you to mock out elements (e.g. so your tests don't depend on the network) and coverage lets you see how much of your code is covered by tests. As always, ensure that you are in the project root directory and the virtualenv is active before you install.
 
-		$ workon my_project
-		$ pip install coverage mock
-		$ pip freeze > requirements.txt
-		
+   $ workon my_project
+   $ pip install coverage mock
+   $ pip freeze > requirements.txt
+   
 1. Next, let's create a directory for our tests. It's a good idea to keep tests inside the library or app they belong to, to make it easier to reuse the code. Inside the "libs/open_weather_map" directory, create a "tests" directory.
 
 1. Inside your new "libs/open_weather_map/tests" directory, create a file for your tests. By convention, the file is called test_<name_of_file_being_tested>.py, so in this case, test_wrapper.py
@@ -526,56 +530,56 @@ Unit tests are great tool to verify that your code works as expected. It is a go
 
 TODO add api key
 
-		# libs/open_weather_map/tests/test_wrapper.py
-		from django.test import TestCase
-		from mock import patch
-		import requests 
-		
-		
-		from libs.open_weather_map.wrapper import OpenWeatherMap
-		
-		
-		class OpenWeatherMapTestCase(TestCase):
-				def setUp(self):
-						# Create a reference to the class being tested
-						self.open_weather_map = OpenWeatherMap()
-		
-				# Patch out requests.get to avoid making a call to the actual API
-				@patch("requests.get")    
-				def test_failure(self, mock_get):
-						# Set up a response with a failure error code to test error handling
-						response = requests.Response()
-						response.status_code = requests.codes.bad_request
-						# Set the mock to return the failure response
-						mock_get.return_value = response
-		
-						forecast = self.open_weather_map.get_forecast()
-		
-						# Ensure that if an error occurs, we get back an empty object and no exceptions are thrown
-						self.assertEqual({}, forecast)
-		
-				# Patch out requests.get to avoid making a call to the actual API
-				@patch("requests.get")    
-				def test_success(self, mock_get):
-						# Set up a response with a successful error code and some data to test the success case
-						response = requests.Response()
-						response.status_code = requests.codes.ok 
-						response._content = b'{"city": {"name": "Sydney"}}'
-						# Set the mock to return the success response
-						mock_get.return_value = response
-		
-						forecast = self.open_weather_map.get_forecast()
-		
-						# Ensure that the data we set in the response body has been parsed correctly
-						self.assertEqual("Sydney", forecast['city']['name'])
-						
+   # libs/open_weather_map/tests/test_wrapper.py
+   from django.test import TestCase
+   from mock import patch
+   import requests 
+   
+   
+   from libs.open_weather_map.wrapper import OpenWeatherMap
+   
+   
+   class OpenWeatherMapTestCase(TestCase):
+      def setUp(self):
+         # Create a reference to the class being tested
+         self.open_weather_map = OpenWeatherMap()
+   
+      # Patch out requests.get to avoid making a call to the actual API
+      @patch("requests.get")    
+      def test_failure(self, mock_get):
+         # Set up a response with a failure error code to test error handling
+         response = requests.Response()
+         response.status_code = requests.codes.bad_request
+         # Set the mock to return the failure response
+         mock_get.return_value = response
+   
+         forecast = self.open_weather_map.get_forecast()
+   
+         # Ensure that if an error occurs, we get back an empty object and no exceptions are thrown
+         self.assertEqual({}, forecast)
+   
+      # Patch out requests.get to avoid making a call to the actual API
+      @patch("requests.get")    
+      def test_success(self, mock_get):
+         # Set up a response with a successful error code and some data to test the success case
+         response = requests.Response()
+         response.status_code = requests.codes.ok 
+         response._content = b'{"city": {"name": "Sydney"}}'
+         # Set the mock to return the success response
+         mock_get.return_value = response
+   
+         forecast = self.open_weather_map.get_forecast()
+   
+         # Ensure that the data we set in the response body has been parsed correctly
+         self.assertEqual("Sydney", forecast['city']['name'])
+         
 1. Try running your tests using the built-in django test runner:
 
-		$ python manage.py test
-		
+   $ python manage.py test
+   
 1. Generate and view the coverage report:
 
-		$ coverage run --source=. manage.py test
+   $ coverage run --source=. manage.py test
     $ coverage report
     
 1. Once your tests run successfully, [review your changes and commit your code](#process-for-committing-code).
@@ -588,57 +592,57 @@ Django comes with forms that make it easy to take user input and perform actions
 
 1. Inside your app directory, create a file called forms.py to contain your form code. You only need to create the file once per app. This should result in the following directory contents for app1:
 
-		my_project/
-		    app1/
-		    		...
-		        admin.py
-		        forms.py
-		        ...
-		
+   my_project/
+       app1/
+          ...
+           admin.py
+           forms.py
+           ...
+   
 1. Open app1/forms.py, and define a form to handle the user's location input.
 
-		# app1/forms.py
-		from django import forms
-		
-		
-		class LocationForm(forms.Form):
-				city = forms.CharField(label='City', max_length=50)
-				country = forms.CharField(label='Country', max_length=2)
-		
+   # app1/forms.py
+   from django import forms
+   
+   
+   class LocationForm(forms.Form):
+      city = forms.CharField(label='City', max_length=50)
+      country = forms.CharField(label='Country', max_length=2)
+   
 1. Now that we have created a form, we can use that form in the view to handle user input. Generally, you first check whether this is the initial page load request, or a request generatd by submitting the form. If the latter, check if form input is valid and take action accordingly. You will need to put the form into the context so it is available to the template. Once all of these steps are completed, your views.py should look like the following:
 
-		# app1/views.py
-		from django.shortcuts import render
-		
-		from libs.open_weather_map.wrapper import OpenWeatherMap
-		from app1 import forms as app1_forms
-		
-		
-		def index(request):
-				context = {}
-				# If request has GET parameters, this means it was created when the user clicked the submit
-				# submit button on the form
-				if request.GET:
-						# Create a bound form based on the GET parameters to the request
-						form = app1_forms.LocationForm(request.GET)
-						if form.is_valid():
-								# If the form parameters are valid, search for weather based on the form data
-								# If the form parameters are invalid, the page will be loaded showing the errors
-								open_weather_map = OpenWeatherMap()
-								context['forecast'] = open_weather_map.get_forecast(
-										city=form.cleaned_data['city'], country=form.cleaned_data['country'])
-				else:
-						# This is an initial page load, so create an unbound form
-						form = app1_forms.LocationForm()
-				# Add the form to the page context so it is available to the template
-				context['form'] = form
-				return render(request, 'app1/index.html', context)
-				
+   # app1/views.py
+   from django.shortcuts import render
+   
+   from libs.open_weather_map.wrapper import OpenWeatherMap
+   from app1 import forms as app1_forms
+   
+   
+   def index(request):
+      context = {}
+      # If request has GET parameters, this means it was created when the user clicked the submit
+      # submit button on the form
+      if request.GET:
+         # Create a bound form based on the GET parameters to the request
+         form = app1_forms.LocationForm(request.GET)
+         if form.is_valid():
+            # If the form parameters are valid, search for weather based on the form data
+            # If the form parameters are invalid, the page will be loaded showing the errors
+            open_weather_map = OpenWeatherMap()
+            context['forecast'] = open_weather_map.get_forecast(
+               city=form.cleaned_data['city'], country=form.cleaned_data['country'])
+      else:
+         # This is an initial page load, so create an unbound form
+         form = app1_forms.LocationForm()
+      # Add the form to the page context so it is available to the template
+      context['form'] = form
+      return render(request, 'app1/index.html', context)
+      
 1. Note that in the above changes to the view, we passed city and country to our OpenWeatherMap.get_forecast call. You may recall that previously, get_forecast did not take any parameters. We need to add the parameters, and modify our call to the API to use those parameters. The [API documentation](http://openweathermap.org/forecast5#JSON) indicates that we can pass "q=city,country_code" to retrieve data based on city and country.
 
-		# lib/open_weather_map/wrapper.py
-		...
-		def get_forecast(self, city='', country=''):
+   # lib/open_weather_map/wrapper.py
+   ...
+   def get_forecast(self, city='', country=''):
         # Append the "forecast" path to the base API URL
         url = '%sforecast' % self.api_url
 
@@ -650,25 +654,25 @@ Django comes with forms that make it easy to take user input and perform actions
             params['lat'] = -33.8650
             params['lon'] = 151.2094
     ...
-				
+      
 1. Now we can add the form to the html template. You can add the form above the weather data, and also update the error message when no weather data is available to indicate to the user they should enter a valid location.
 
-		# app1/templates/app1/index.html
-		...
-		<h3>Weather Forecast</h3>
-		
-		<form>
-			{{ form }}
-			<input type="submit" value="Find Weather">
-		</form>
+   # app1/templates/app1/index.html
+   ...
+   <h3>Weather Forecast</h3>
+   
+   <form>
+   	{{ form }}
+   	<input type="submit" value="Find Weather">
+   </form>
 
-		<div>
+   <div>
   	{% if forecast %}
   	...
-		{% else %}
-			<h4>Enter a valid location to see weather info!</h4>
-		{% endif %}
-		...
+   {% else %}
+   	<h4>Enter a valid location to see weather info!</h4>
+   {% endif %}
+   ...
 
 1. This would be a good time to [review your changes and commit your code](#process-for-committing-code). Try a variety of locations to see that weather is retrieved.
 
@@ -694,11 +698,11 @@ Now that you have a basic functional weather project, you may want to share with
 1. Follow the instructions for installing the [Heroku toolbelt](https://toolbelt.heroku.com).
 1. On the command line, log in to Heroku using the username and password you set up on the Heroku website:
 
-		$ heroku login
-		
+   $ heroku login
+   
 1. Connect your Heroku app to your local git project, where <HEROKU_APP_NAME> is the name of the app on Heroku (visible in the center top of the app page on the Heroku site):
 
-		$ heroku git:remote -a <HEROKU_APP_NAME>
+   $ heroku git:remote -a <HEROKU_APP_NAME>
 
 
 ### Set up GitHub -> Heroku Deployment
@@ -713,27 +717,27 @@ Now that you have a basic functional weather project, you may want to share with
 1. Once deployment is complete, click the "View" button to check if the app is correctly deployed.
 1. We haven't finished setting up Heroku yet, so you should get an error page in the browser. To find out what the error is, go to the command line, and in the project directory, check the logs:
 
-		$ heroku logs
-		
+   $ heroku logs
+   
 1. You should see an error something like "No web processes running". This is because we haven't started any web processes, and to do that, we need to define what a web process is for this app. Heroku relies on a Procfile to run your app, so let's create one now. Usually, Django web processes are run with gunicorn (installed with the django-toolbelt), using the wsgi file generated when the Django project was created. NOTE! The Procfile MUST be in the root of your project. Under the top level my_project directory, create a file named Procfile with the following content:
 
-		# Procfile
-		web: gunicorn my_project.wsgi --log-file -
-		
+   # Procfile
+   web: gunicorn my_project.wsgi --log-file -
+   
 1. Heroku defaults to Python 2.x, and we developed our app using Python 3, so we need to tell Heroku what version to use. You can do that by adding a runtime.txt file in the root of the project, with the following contents:
 
-		$ cat runtime.txt
-		python-3.4.3
-		
+   $ cat runtime.txt
+   python-3.4.3
+   
 1. Let's [review your changes and commit your code](#process-for-committing-code) so the Procfile and runtime.txt are available to Heroku. This new commit will be automatically deployed.
 
 1. You can check deployment status on the command line:
 
-		$ heroku releases
-		
+   $ heroku releases
+   
 1. Once the new release is complete, you can tell Heroku to create a web process:
 
-		$ heroku ps:scale web=1
+   $ heroku ps:scale web=1
 
 1. Refresh the browser window where you were viewing your heroku app. You should now see your app up and running with weather data!
 
