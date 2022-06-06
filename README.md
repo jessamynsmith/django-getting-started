@@ -142,62 +142,62 @@ You will need to do this once for each new Django project you create.
     1. Click the "Create repository" button
     1. On the right-hand side, select the value in the HTTPS clone URL box and copy it
 
-1. Clone your project. On the command line, do the following:
+2. Clone your project. On the command line, do the following:
 
     $ cd ~/Development
     
     $ git clone ```<VALUE_FROM_GITHUB>```  # Paste in the value you copied above
 
-1. On the command line, go into the cloned project directory:
+3. On the command line, go into the cloned project directory:
 
     $ cd my_project
 
-1. Make a virtualenv using python3:
+4. Make a virtualenv using python3:
 
     $ mkvirtualenv my_project --python=python3  # Create a python3 virtualenv
 
-1. Install django-toolbelt, which includes Django and useful packages for
+5. Install django-toolbelt, which includes Django and useful packages for
 deploying a Django project to Heroku. On the command line:
 
     $ pip install django-toolbelt
 
-1. Check the list of installed packages using pip freeze. It should look something like the following. The first part of the line is the package name, the '==' is the version specifier (in this case, identically equal to), and the number to the right is the version that is installed.
+6. Check the list of installed packages using pip freeze. It should look something like the following. The first part of the line is the package name, the '==' is the version specifier (in this case, identically equal to), and the number to the right is the version that is installed.
 
     $ pip freeze
-    
-    dj-database-url==0.3.0
+
+    ```dj-database-url==0.3.0
     dj-static==0.0.6
     Django==1.8.4
     django-toolbelt==0.0.1
     gunicorn==19.3.0
     psycopg2==2.6.1
     static3==0.6.1
-    wheel==0.24.0
+    wheel==0.24.0```
 
-1. Explanation of installed packages:
-
-    dj-database-url - Required by Heroku to access the postgres database addon
+7. Explanation of installed packages:
+    
+    ```dj-database-url - Required by Heroku to access the postgres database addon
     dj-static - Wrapper around static3 to allow Heroku to serve static files (e.g. CSS, JavaScript)
     Django - The main Django package
     django-toolbelt - The top-level package we installed to get all these packages
     gunicorn - Webserver recommended by Heroku for serving Django apps (similar to 'manage.py runserver', which is used for testing)
     psycopg2 - Python package for accessing postgres databases
     static3 - Python 3 version of static, which allows your static files to be served by WSGI
-    wheel - Used by pip, installed by default
+    wheel - Used by pip, installed by default```
 
-1. The standard way of tracking package requirements for a Django project is a requirements.txt file. Whenever a fresh checkout of this project is made, all necessary dependencies can be installed by typing `pip install -r requirements.txt` on the command line. This is how Heroku will install your project dependencies. Use pip freeze to add the installed packages to requirements.txt
+8. The standard way of tracking package requirements for a Django project is a requirements.txt file. Whenever a fresh checkout of this project is made, all necessary dependencies can be installed by typing `pip install -r requirements.txt` on the command line. This is how Heroku will install your project dependencies. Use pip freeze to add the installed packages to requirements.txt
 
     $ pip freeze > requirements.txt
 
-1. Create a new Django project in the top-level git project directory:
+9. Create a new Django project in the top-level git project directory:
 
     $ django-admin startproject my_project . # Note the trailing '.' which means 'current directory'
 
-1. Edit your .gitignore file to include an entry for .sql files. By default, Django will use sqlite3 (a basic database that is bundled with Python) and you don't want to commit your database file to your repository! Open .gitignore and add the following at the end of the file:
+10. Edit your .gitignore file to include an entry for .sql files. By default, Django will use sqlite3 (a basic database that is bundled with Python) and you don't want to commit your database file to your repository! Open .gitignore and add the following at the end of the file:
 
-    *.sql*
+     *.sql*
 
-1. This is a good time to verify that your project runs (always a good idea before committing code!) and if it does, commit the changes.
+11. This is a good time to verify that your project runs (always a good idea before committing code!) and if it does, commit the changes.
 
 ### Process for Committing Code
 
